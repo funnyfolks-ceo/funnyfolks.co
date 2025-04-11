@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FunnyFolks EDU - 발리 교육기관</title>
+<link href="https://unpkg.com/leaflet/dist/leaflet.css" rel="stylesheet"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<style>
+    body {
+      font-family: sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #ff884d;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .school-card {
+      background: white;
+      padding: 1rem;
+      margin: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .school-card img {
+      width: 160px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+    .school-info {
+      flex: 1;
+    }
+    .school-info h3 {
+      margin: 0 0 0.5rem;
+    }
+    .rating {
+      color: #ffaa00;
+    }
+    .review {
+      font-style: italic;
+      color: #555;
+    }
+    #map {
+      height: 400px;
+      border-radius: 12px;
+      margin: 1rem;
+    }
+    .city-toggle {
+      margin: 1rem;
+    }
+    .city-toggle button {
+      margin-right: 0.5rem;
+      padding: 0.4rem 0.8rem;
+    }
+  </style>
+<style>
+.school-section {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+.school-info {
+    flex: 2;
+}
+.calendar-info {
+    flex: 1;
+    min-width: 280px;
+}
+.daycare-details {
+    font-size: 0.95rem;
+    color: #333;
+    margin-top: 0.5rem;
+}
+</style>
+<style>
+  .filters { margin-bottom: 2rem; text-align: center; }
+  select {
+    margin: 0 1rem 1rem 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  .hidden { display: none !important; }
+</style>
+<script>
+  function applyFilters() {
+    const type = document.getElementById("typeFilter").value;
+    const age = document.getElementById("ageFilter").value;
+    const cards = document.querySelectorAll(".school-section");
+
+    cards.forEach(card => {
+      const typeAttr = card.getAttribute("data-type");
+      const ageAttr = card.getAttribute("data-age");
+      const matchType = type === "all" || typeAttr === type;
+      const matchAge = age === "all" || ageAttr === age;
+      card.classList.toggle("hidden", !(matchType && matchAge));
+    });
+  }
+</script>
+</head>
+<body>
+<header>
+<h1>FunnyFolks EDU</h1>
+<p>세상 어디서든, 아이 교육은 이어져야 하니까<br/><small style="opacity: 0.8;">Wherever you are, your child’s education should continue.</small></p>
+</header>
+<div id="map"></div>
+<div class="filter-controls" style="margin: 1rem 1.5rem;">
+<strong>🎯 원하는 교육기관 유형 선택:</strong>
+<button>전체</button>
+<button>🎒 유치원</button>
+<button>🧸 어린이집</button>
+<button>🏫 국제학교</button>
+<button>🎨 학습센터</button>
+<br/><br/>
+<strong>🧒 연령 선택:</strong>
+<button>1~3세</button>
+<button>4~6세</button>
+<button>7~10세</button>
+<button>11세 이상</button>
+</div>
+
+<div class="filters">
+<label>유형 선택:
+    <select id="typeFilter" onchange="applyFilters()">
+<option value="all">전체</option>
+<option value="international">국제학교</option>
+<option value="kindergarten">유치원</option>
+<option value="daycare">데이케어</option>
+</select>
+</label>
+<label>연령대 선택:
+    <select id="ageFilter" onchange="applyFilters()">
+<option value="all">전체</option>
+<option value="0-2">0-2세</option>
+<option value="3-5">3-5세</option>
+<option value="6-12">6-12세</option>
+</select>
+</label>
+</div>
+<main><div class="school-section" data-age="3-5" data-type="kindergarten"><div class="school-card school-info" data-city="Canggu" data-type="유치원">
+<img alt="The Garden Early Learning Centre" src="https://www.thegardenbali.com/wp-content/uploads/2023/01/the-garden-outdoor.jpg"/>
+<div class="school-info">
+<h3>The Garden Early Learning Centre (🎒 유치원)</h3>
+<div class="rating">★★★★☆</div>
+<p><strong>위치:</strong> Canggu</p>
+<p><strong>연령:</strong> 15개월 ~ 7세 | <strong>언어:</strong> 영어</p>
+<p><strong>픽업/드롭:</strong> 가능 (문의 필요)</p>
+<p class="review">“짧은 체류 중 아이가 너무 좋아했어요. 공간도 안전해요.”</p>
+<p style="font-style: italic; color: #333;">“처음엔 걱정했는데, 선생님들이 정말 친절하고 따뜻했어요.” – @nomadmom.bali</p>
+<button>예약 문의</button>
+<button style="margin-left:0.5rem;">셔틀 문의</button>
+</div>
+<div class="daycare-details">💰 데이케어 비용: $250/week<br/>🕒 운영 시간: 9AM - 2PM</div></div><div class="calendar-info"><table border="1" style="border-collapse: collapse; text-align: center;"><tr><th colspan="7">April 2025</th></tr><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td></td><td></td><td style="background-color: #f8d7da;">1</td><td style="background-color: #f8d7da;">2</td><td style="background-color: #f8d7da;">3</td><td style="background-color: #f8d7da;">4</td><td style="background-color: #f8d7da;">5</td></tr><tr><td style="background-color: #f8d7da;">6</td><td style="background-color: #f8d7da;">7</td><td style="background-color: #f8d7da;">8</td><td style="background-color: #f8d7da;">9</td><td style="background-color: #f8d7da;">10</td><td style="background-color: #f8d7da;">11</td><td style="background-color: #f8d7da;">12</td></tr><tr><td style="background-color: #f8d7da;">13</td><td style="background-color: #d4edda;">14</td><td style="background-color: #f8d7da;">15</td><td style="background-color: #f8d7da;">16</td><td style="background-color: #d4edda;">17</td><td style="background-color: #f8d7da;">18</td><td style="background-color: #d4edda;">19</td></tr><tr><td style="background-color: #d4edda;">20</td><td style="background-color: #f8d7da;">21</td><td style="background-color: #f8d7da;">22</td><td style="background-color: #f8d7da;">23</td><td style="background-color: #f8d7da;">24</td><td style="background-color: #f8d7da;">25</td><td style="background-color: #f8d7da;">26</td></tr><tr><td style="background-color: #d4edda;">27</td><td style="background-color: #d4edda;">28</td><td style="background-color: #f8d7da;">29</td><td style="background-color: #f8d7da;">30</td></tr></table></div></div><div class="school-section" data-age="6-12" data-type="international"><div class="school-card school-info" data-city="Ubud" data-type="국제학교">
+<img alt="Green School Bali" src="https://www.greenschool.org/wp-content/uploads/2019/07/Green-School-Aerial.jpg"/>
+<div class="school-info">
+<h3>Green School Bali (🏫 국제학교)</h3>
+<div class="rating">★★★★☆</div>
+<p><strong>위치:</strong> Ubud</p>
+<p><strong>연령:</strong> 3세 ~ 18세 | <strong>언어:</strong> 영어</p>
+<p><strong>픽업/드롭:</strong> 불가능</p>
+<p class="review">“자연 속 생태 기반 교육이라 정말 특별했어요.”</p>
+<p style="font-style: italic; color: #333;">“자연과 함께하는 교육, 정말 인상 깊었어요.” – @balifamilytribe</p>
+<button>예약 문의</button>
+</div>
+<div class="daycare-details">💰 데이케어 비용: $400/week<br/>🕒 운영 시간: 8AM - 3PM</div></div><div class="calendar-info"><table border="1" style="border-collapse: collapse; text-align: center;"><tr><th colspan="7">April 2025</th></tr><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td></td><td></td><td style="background-color: #f8d7da;">1</td><td style="background-color: #f8d7da;">2</td><td style="background-color: #f8d7da;">3</td><td style="background-color: #f8d7da;">4</td><td style="background-color: #f8d7da;">5</td></tr><tr><td style="background-color: #f8d7da;">6</td><td style="background-color: #f8d7da;">7</td><td style="background-color: #f8d7da;">8</td><td style="background-color: #f8d7da;">9</td><td style="background-color: #f8d7da;">10</td><td style="background-color: #f8d7da;">11</td><td style="background-color: #f8d7da;">12</td></tr><tr><td style="background-color: #d4edda;">13</td><td style="background-color: #f8d7da;">14</td><td style="background-color: #f8d7da;">15</td><td style="background-color: #f8d7da;">16</td><td style="background-color: #f8d7da;">17</td><td style="background-color: #f8d7da;">18</td><td style="background-color: #f8d7da;">19</td></tr><tr><td style="background-color: #d4edda;">20</td><td style="background-color: #f8d7da;">21</td><td style="background-color: #f8d7da;">22</td><td style="background-color: #f8d7da;">23</td><td style="background-color: #f8d7da;">24</td><td style="background-color: #f8d7da;">25</td><td style="background-color: #f8d7da;">26</td></tr><tr><td style="background-color: #f8d7da;">27</td><td style="background-color: #f8d7da;">28</td><td style="background-color: #f8d7da;">29</td><td style="background-color: #d4edda;">30</td></tr></table></div></div><div class="school-section" data-age="0-2" data-type="daycare"><div class="school-card school-info" data-city="Canggu" data-type="어린이집">
+<img alt="Cubby House Kids Club" src="https://www.finnsrecclub.com/wp-content/uploads/2016/08/Cubby-house-01.jpg"/>
+<div class="school-info">
+<h3>Cubby House Kids Club (🧸 어린이집)</h3>
+<div class="rating">★★★★☆</div>
+<p><strong>위치:</strong> Canggu</p>
+<p><strong>연령:</strong> 1세 ~ 6세 | <strong>언어:</strong> 영어</p>
+<p><strong>픽업/드롭:</strong> 가능 (문의 필요)</p>
+<p class="review">“단기 방문 가족에 딱 좋아요. 안전하고 재밌어요!”</p>
+<p style="font-style: italic; color: #333;">“단기로 맡겼는데 아이가 집에 가기 싫어할 정도였어요!” – @katie.oz</p>
+<button>예약 문의</button>
+<button style="margin-left:0.5rem;">셔틀 문의</button>
+</div>
+<div class="daycare-details">💰 데이케어 비용: $300/week<br/>🕒 운영 시간: 10AM - 4PM</div></div><div class="calendar-info"><table border="1" style="border-collapse: collapse; text-align: center;"><tr><th colspan="7">April 2025</th></tr><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td></td><td></td><td style="background-color: #f8d7da;">1</td><td style="background-color: #f8d7da;">2</td><td style="background-color: #f8d7da;">3</td><td style="background-color: #f8d7da;">4</td><td style="background-color: #f8d7da;">5</td></tr><tr><td style="background-color: #f8d7da;">6</td><td style="background-color: #f8d7da;">7</td><td style="background-color: #f8d7da;">8</td><td style="background-color: #f8d7da;">9</td><td style="background-color: #f8d7da;">10</td><td style="background-color: #f8d7da;">11</td><td style="background-color: #f8d7da;">12</td></tr><tr><td style="background-color: #f8d7da;">13</td><td style="background-color: #f8d7da;">14</td><td style="background-color: #d4edda;">15</td><td style="background-color: #f8d7da;">16</td><td style="background-color: #f8d7da;">17</td><td style="background-color: #f8d7da;">18</td><td style="background-color: #d4edda;">19</td></tr><tr><td style="background-color: #f8d7da;">20</td><td style="background-color: #f8d7da;">21</td><td style="background-color: #f8d7da;">22</td><td style="background-color: #f8d7da;">23</td><td style="background-color: #f8d7da;">24</td><td style="background-color: #d4edda;">25</td><td style="background-color: #f8d7da;">26</td></tr><tr><td style="background-color: #d4edda;">27</td><td style="background-color: #f8d7da;">28</td><td style="background-color: #d4edda;">29</td><td style="background-color: #f8d7da;">30</td></tr></table></div></div><div class="school-section" data-age="3-5" data-type="daycare"><div class="school-card school-info" data-city="Canggu" data-type="유치원">
+<img alt="Sunrise School Bali" src="https://sunriseschoolbali.com/wp-content/uploads/2020/02/home-banner-1.jpg"/>
+<div class="school-info">
+<h3>Sunrise School Bali (🎒 유치원)</h3>
+<div class="rating">★★★★☆</div>
+<p><strong>위치:</strong> Canggu</p>
+<p><strong>연령:</strong> 3세 ~ 12세 | <strong>언어:</strong> 영어, 인도네시아어</p>
+<p><strong>픽업/드롭:</strong> 가능 (문의 필요)</p>
+<p class="review">“작은 학교지만 분위기 정말 좋아요.”</p>
+<p style="font-style: italic; color: #333;">“재등록할 만큼 만족스러워요. 소규모라 세심하게 봐줘요.” – @helloannie</p>
+<button>예약 문의</button>
+<button style="margin-left:0.5rem;">셔틀 문의</button>
+</div>
+<div class="daycare-details">💰 데이케어 비용: $350/week<br/>🕒 운영 시간: 8:30AM - 1:30PM</div></div><div class="calendar-info"><table border="1" style="border-collapse: collapse; text-align: center;"><tr><th colspan="7">April 2025</th></tr><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td></td><td></td><td style="background-color: #f8d7da;">1</td><td style="background-color: #f8d7da;">2</td><td style="background-color: #f8d7da;">3</td><td style="background-color: #f8d7da;">4</td><td style="background-color: #f8d7da;">5</td></tr><tr><td style="background-color: #f8d7da;">6</td><td style="background-color: #f8d7da;">7</td><td style="background-color: #f8d7da;">8</td><td style="background-color: #f8d7da;">9</td><td style="background-color: #f8d7da;">10</td><td style="background-color: #d4edda;">11</td><td style="background-color: #f8d7da;">12</td></tr><tr><td style="background-color: #f8d7da;">13</td><td style="background-color: #d4edda;">14</td><td style="background-color: #d4edda;">15</td><td style="background-color: #d4edda;">16</td><td style="background-color: #f8d7da;">17</td><td style="background-color: #d4edda;">18</td><td style="background-color: #f8d7da;">19</td></tr><tr><td style="background-color: #f8d7da;">20</td><td style="background-color: #f8d7da;">21</td><td style="background-color: #f8d7da;">22</td><td style="background-color: #f8d7da;">23</td><td style="background-color: #f8d7da;">24</td><td style="background-color: #d4edda;">25</td><td style="background-color: #f8d7da;">26</td></tr><tr><td style="background-color: #f8d7da;">27</td><td style="background-color: #f8d7da;">28</td><td style="background-color: #f8d7da;">29</td><td style="background-color: #f8d7da;">30</td></tr></table></div></div><div class="school-section" data-age="3-5" data-type="kindergarten"><div class="school-card school-info" data-city="Sanur" data-type="국제학교">
+<img alt="Bali Island School" src="https://www.baliis.net/wp-content/uploads/2020/01/4T6A3974.jpg"/>
+<div class="school-info">
+<h3>Bali Island School (🏫 국제학교)</h3>
+<div class="rating">★★★★☆</div>
+<p><strong>위치:</strong> Sanur</p>
+<p><strong>연령:</strong> 3세 ~ 18세 | <strong>언어:</strong> 영어 (IB)</p>
+<p><strong>픽업/드롭:</strong> 불가능</p>
+<p class="review">“IB 인증이라 커리큘럼이 믿을만해요.”</p>
+<p style="font-style: italic; color: #333;">“IB 과정이라 확실히 탄탄하고 선생님도 다국적이에요.” – @jay.from.uk</p>
+<button>예약 문의</button>
+</div>
+<div class="daycare-details">💰 데이케어 비용: $280/week<br/>🕒 운영 시간: 9AM - 1PM</div></div><div class="calendar-info"><table border="1" style="border-collapse: collapse; text-align: center;"><tr><th colspan="7">April 2025</th></tr><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td></td><td></td><td style="background-color: #f8d7da;">1</td><td style="background-color: #f8d7da;">2</td><td style="background-color: #f8d7da;">3</td><td style="background-color: #f8d7da;">4</td><td style="background-color: #f8d7da;">5</td></tr><tr><td style="background-color: #f8d7da;">6</td><td style="background-color: #f8d7da;">7</td><td style="background-color: #f8d7da;">8</td><td style="background-color: #f8d7da;">9</td><td style="background-color: #f8d7da;">10</td><td style="background-color: #f8d7da;">11</td><td style="background-color: #f8d7da;">12</td></tr><tr><td style="background-color: #f8d7da;">13</td><td style="background-color: #f8d7da;">14</td><td style="background-color: #f8d7da;">15</td><td style="background-color: #f8d7da;">16</td><td style="background-color: #d4edda;">17</td><td style="background-color: #f8d7da;">18</td><td style="background-color: #d4edda;">19</td></tr><tr><td style="background-color: #f8d7da;">20</td><td style="background-color: #f8d7da;">21</td><td style="background-color: #f8d7da;">22</td><td style="background-color: #f8d7da;">23</td><td style="background-color: #d4edda;">24</td><td style="background-color: #f8d7da;">25</td><td style="background-color: #d4edda;">26</td></tr><tr><td style="background-color: #f8d7da;">27</td><td style="background-color: #f8d7da;">28</td><td style="background-color: #d4edda;">29</td><td style="background-color: #f8d7da;">30</td></tr></table></div></div><div class="school-section" data-age="3-5" data-type="international"><div class="school-card school-info" data-city="Sanur" data-type="학습센터">
+<img alt="Alam Atelier" src="https://alamatelier.com/wp-content/uploads/2023/03/sanur-bali-preschool.jpeg"/>
+<div class="school-info">
+<h3>Alam Atelier (🎨 학습센터)</h3>
+<div class="rating">★★★★☆</div>
+<p><strong>위치:</strong> Sanur</p>
+<p><strong>연령:</strong> 2세 ~ 10세 | <strong>언어:</strong> 영어, 창의 중심</p>
+<p><strong>픽업/드롭:</strong> 불가능</p>
+<p class="review">“미술 중심 커리큘럼이라 창의력 발달에 최고!”</p>
+<p style="font-style: italic; color: #333;">“아이 창의력 수업 좋아요! 수업 끝나고도 놀이터에서 더 놀다 와요.” – @claire.hk</p>
+<button>예약 문의</button>
+</div>
+<div class="daycare-details">💰 데이케어 비용: $450/week<br/>🕒 운영 시간: 8AM - 2PM</div></div><div class="calendar-info"><table border="1" style="border-collapse: collapse; text-align: center;"><tr><th colspan="7">April 2025</th></tr><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td></td><td></td><td style="background-color: #f8d7da;">1</td><td style="background-color: #f8d7da;">2</td><td style="background-color: #f8d7da;">3</td><td style="background-color: #f8d7da;">4</td><td style="background-color: #f8d7da;">5</td></tr><tr><td style="background-color: #f8d7da;">6</td><td style="background-color: #f8d7da;">7</td><td style="background-color: #f8d7da;">8</td><td style="background-color: #f8d7da;">9</td><td style="background-color: #f8d7da;">10</td><td style="background-color: #f8d7da;">11</td><td style="background-color: #f8d7da;">12</td></tr><tr><td style="background-color: #f8d7da;">13</td><td style="background-color: #f8d7da;">14</td><td style="background-color: #d4edda;">15</td><td style="background-color: #f8d7da;">16</td><td style="background-color: #f8d7da;">17</td><td style="background-color: #f8d7da;">18</td><td style="background-color: #f8d7da;">19</td></tr><tr><td style="background-color: #f8d7da;">20</td><td style="background-color: #f8d7da;">21</td><td style="background-color: #d4edda;">22</td><td style="background-color: #f8d7da;">23</td><td style="background-color: #f8d7da;">24</td><td style="background-color: #f8d7da;">25</td><td style="background-color: #d4edda;">26</td></tr><tr><td style="background-color: #d4edda;">27</td><td style="background-color: #f8d7da;">28</td><td style="background-color: #f8d7da;">29</td><td style="background-color: #d4edda;">30</td></tr></table></div></div><div class="school-section" data-age="3-5" data-type="kindergarten"><div class="school-card school-info" data-city="Canggu" data-type="학습센터">
+<img alt="STEAM Academy Bali" src="https://static.wixstatic.com/media/9a3928_42416f83f6754dc89c58ff9048a76bd5~mv2.jpg"/>
+<div class="school-info">
+<h3>STEAM Academy Bali (🎨 학습센터)</h3>
+<div class="rating">★★★★☆</div>
+<p><strong>위치:</strong> Canggu</p>
+<p><strong>연령:</strong> 5세 ~ 14세 | <strong>언어:</strong> 영어, STEAM</p>
+<p><strong>픽업/드롭:</strong> 불가능</p>
+<p class="review">“로봇, 프로그래밍 수업이 진짜 알찼어요!”</p>
+<p style="font-style: italic; color: #333;">“로봇 수업 듣고 아이가 집에서 계속 만드는 중이에요.” – @tomo.jp</p>
+<button>예약 문의</button>
+</div>
+<div class="daycare-details">💰 데이케어 비용: $250/week<br/>🕒 운영 시간: 9AM - 2PM</div></div><div class="calendar-info"><table border="1" style="border-collapse: collapse; text-align: center;"><tr><th colspan="7">April 2025</th></tr><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td></td><td></td><td style="background-color: #f8d7da;">1</td><td style="background-color: #f8d7da;">2</td><td style="background-color: #f8d7da;">3</td><td style="background-color: #f8d7da;">4</td><td style="background-color: #f8d7da;">5</td></tr><tr><td style="background-color: #f8d7da;">6</td><td style="background-color: #f8d7da;">7</td><td style="background-color: #f8d7da;">8</td><td style="background-color: #f8d7da;">9</td><td style="background-color: #f8d7da;">10</td><td style="background-color: #f8d7da;">11</td><td style="background-color: #f8d7da;">12</td></tr><tr><td style="background-color: #f8d7da;">13</td><td style="background-color: #f8d7da;">14</td><td style="background-color: #f8d7da;">15</td><td style="background-color: #f8d7da;">16</td><td style="background-color: #f8d7da;">17</td><td style="background-color: #f8d7da;">18</td><td style="background-color: #d4edda;">19</td></tr><tr><td style="background-color: #f8d7da;">20</td><td style="background-color: #f8d7da;">21</td><td style="background-color: #f8d7da;">22</td><td style="background-color: #d4edda;">23</td><td style="background-color: #f8d7da;">24</td><td style="background-color: #f8d7da;">25</td><td style="background-color: #f8d7da;">26</td></tr><tr><td style="background-color: #f8d7da;">27</td><td style="background-color: #f8d7da;">28</td><td style="background-color: #d4edda;">29</td><td style="background-color: #f8d7da;">30</td></tr></table></div></div><div class="school-section" data-age="6-12" data-type="international"><div class="school-card school-info" data-city="Ubud" data-type="유치원">
+<img alt="Pelangi School" src="https://pelangischoolbali.com/wp-content/uploads/2019/03/gallery-2.jpg"/>
+<div class="school-info">
+<h3>Pelangi School (🎒 유치원)</h3>
+<div class="rating">★★★★☆</div>
+<p><strong>위치:</strong> Ubud</p>
+<p><strong>연령:</strong> 2세 ~ 12세 | <strong>언어:</strong> 영어</p>
+<p><strong>픽업/드롭:</strong> 가능 (문의 필요)</p>
+<p class="review">“우붓의 자연과 함께해서 아이가 매일 신났어요.”</p>
+<p style="font-style: italic; color: #333;">“우붓 자연 환경 덕에 정서적으로도 안정된 모습이 보여요.” – @bali.mom.lee</p>
+<button>예약 문의</button>
+<button style="margin-left:0.5rem;">셔틀 문의</button>
+</div>
+<div class="daycare-details">💰 데이케어 비용: $400/week<br/>🕒 운영 시간: 8AM - 3PM</div></div><div class="calendar-info"><table border="1" style="border-collapse: collapse; text-align: center;"><tr><th colspan="7">April 2025</th></tr><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td></td><td></td><td style="background-color: #f8d7da;">1</td><td style="background-color: #f8d7da;">2</td><td style="background-color: #f8d7da;">3</td><td style="background-color: #f8d7da;">4</td><td style="background-color: #f8d7da;">5</td></tr><tr><td style="background-color: #f8d7da;">6</td><td style="background-color: #f8d7da;">7</td><td style="background-color: #f8d7da;">8</td><td style="background-color: #f8d7da;">9</td><td style="background-color: #f8d7da;">10</td><td style="background-color: #f8d7da;">11</td><td style="background-color: #d4edda;">12</td></tr><tr><td style="background-color: #f8d7da;">13</td><td style="background-color: #f8d7da;">14</td><td style="background-color: #f8d7da;">15</td><td style="background-color: #f8d7da;">16</td><td style="background-color: #f8d7da;">17</td><td style="background-color: #f8d7da;">18</td><td style="background-color: #f8d7da;">19</td></tr><tr><td style="background-color: #f8d7da;">20</td><td style="background-color: #d4edda;">21</td><td style="background-color: #d4edda;">22</td><td style="background-color: #f8d7da;">23</td><td style="background-color: #f8d7da;">24</td><td style="background-color: #f8d7da;">25</td><td style="background-color: #f8d7da;">26</td></tr><tr><td style="background-color: #f8d7da;">27</td><td style="background-color: #d4edda;">28</td><td style="background-color: #d4edda;">29</td><td style="background-color: #d4edda;">30</td></tr></table></div></div><div class="school-section" data-age="0-2" data-type="daycare"><div class="school-card school-info" data-city="Sanur" data-type="어린이집">
+<img alt="Blue Dolphin Playgroup" src="https://www.bluedolphin-bali.com/uploads/1/3/5/0/135080204/blue-dolphin-playgroup_orig.jpg"/>
+<div class="school-info">
+<h3>Blue Dolphin Playgroup (🧸 어린이집)</h3>
+<div class="rating">★★★★☆</div>
+<p><strong>위치:</strong> Sanur</p>
+<p><strong>연령:</strong> 1세 ~ 5세 | <strong>언어:</strong> 영어</p>
+<p><strong>픽업/드롭:</strong> 가능 (문의 필요)</p>
+<p class="review">“직원들이 아이들에게 너무 따뜻하고 친절했어요.”</p>
+<p style="font-style: italic; color: #333;">“베이비케어가 믿음직스러워서 다시 이용할 생각이에요.” – @ashley.sg</p>
+<button>예약 문의</button>
+<button style="margin-left:0.5rem;">셔틀 문의</button>
+</div>
+<div class="daycare-details">💰 데이케어 비용: $300/week<br/>🕒 운영 시간: 10AM - 4PM</div></div><div class="calendar-info"><table border="1" style="border-collapse: collapse; text-align: center;"><tr><th colspan="7">April 2025</th></tr><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td></td><td></td><td style="background-color: #f8d7da;">1</td><td style="background-color: #f8d7da;">2</td><td style="background-color: #f8d7da;">3</td><td style="background-color: #f8d7da;">4</td><td style="background-color: #f8d7da;">5</td></tr><tr><td style="background-color: #f8d7da;">6</td><td style="background-color: #f8d7da;">7</td><td style="background-color: #f8d7da;">8</td><td style="background-color: #f8d7da;">9</td><td style="background-color: #f8d7da;">10</td><td style="background-color: #f8d7da;">11</td><td style="background-color: #d4edda;">12</td></tr><tr><td style="background-color: #f8d7da;">13</td><td style="background-color: #d4edda;">14</td><td style="background-color: #f8d7da;">15</td><td style="background-color: #f8d7da;">16</td><td style="background-color: #f8d7da;">17</td><td style="background-color: #f8d7da;">18</td><td style="background-color: #f8d7da;">19</td></tr><tr><td style="background-color: #f8d7da;">20</td><td style="background-color: #d4edda;">21</td><td style="background-color: #f8d7da;">22</td><td style="background-color: #d4edda;">23</td><td style="background-color: #f8d7da;">24</td><td style="background-color: #f8d7da;">25</td><td style="background-color: #f8d7da;">26</td></tr><tr><td style="background-color: #f8d7da;">27</td><td style="background-color: #d4edda;">28</td><td style="background-color: #f8d7da;">29</td><td style="background-color: #f8d7da;">30</td></tr></table></div></div></main>
+<script>
+    const map = L.map('map').setView([-8.65, 115.13], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    
+      L.marker([-8.6478, 115.1455], {
+        icon: L.divIcon({ html: '🎒', className: '', iconSize: [24, 24] })
+      }).addTo(map).bindPopup("🎒 The Garden Early Learning Centre (유치원) - Canggu");
+    
+      L.marker([-8.5369, 115.1958], {
+        icon: L.divIcon({ html: '🏫', className: '', iconSize: [24, 24] })
+      }).addTo(map).bindPopup("🏫 Green School Bali (국제학교) - Ubud");
+    
+      L.marker([-8.6512, 115.1358], {
+        icon: L.divIcon({ html: '🧸', className: '', iconSize: [24, 24] })
+      }).addTo(map).bindPopup("🧸 Cubby House Kids Club (어린이집) - Canggu");
+    
+      L.marker([-8.6371, 115.1783], {
+        icon: L.divIcon({ html: '🎒', className: '', iconSize: [24, 24] })
+      }).addTo(map).bindPopup("🎒 Sunrise School Bali (유치원) - Canggu");
+    
+      L.marker([-8.6986, 115.2478], {
+        icon: L.divIcon({ html: '🏫', className: '', iconSize: [24, 24] })
+      }).addTo(map).bindPopup("🏫 Bali Island School (국제학교) - Sanur");
+    
+      L.marker([-8.7033, 115.2512], {
+        icon: L.divIcon({ html: '🎨', className: '', iconSize: [24, 24] })
+      }).addTo(map).bindPopup("🎨 Alam Atelier (학습센터) - Sanur");
+    
+      L.marker([-8.6388, 115.15], {
+        icon: L.divIcon({ html: '🎨', className: '', iconSize: [24, 24] })
+      }).addTo(map).bindPopup("🎨 STEAM Academy Bali (학습센터) - Canggu");
+    
+      L.marker([-8.5269, 115.2637], {
+        icon: L.divIcon({ html: '🎒', className: '', iconSize: [24, 24] })
+      }).addTo(map).bindPopup("🎒 Pelangi School (유치원) - Ubud");
+    
+      L.marker([-8.6977, 115.2521], {
+        icon: L.divIcon({ html: '🧸', className: '', iconSize: [24, 24] })
+      }).addTo(map).bindPopup("🧸 Blue Dolphin Playgroup (어린이집) - Sanur");
+    
+  </script>
+<div style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between; gap: 2rem; padding: 2rem;">
+<section style="width: 32%; min-width: 300px; background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+<h2>📬 자유게시판 (Community Board)</h2>
+<div style="margin-bottom: 1rem;">
+<strong>🌍 국가별 게시판 보기 (By Country):</strong>
+<button>전체</button><button>🇮🇩 발리</button><button>🇹🇭 치앙마이</button><button>🇻🇳 다낭</button>
+</div>
+<ul style="list-style-type: none; padding-left: 0;">
+<li>🇰🇷 [질문] 발리 짱구에 오전 반만 가능한 유치원 있을까요? - by @yeonmom</li>
+<li>🇺🇸 [INFO] Anyone tried Green School Ubud for short-term? - by @nomadpaul</li>
+<li>🇰🇷 [후기] Pelangi School 수업 좋았어요! - by @seoyoonappa</li>
+<li>🇳🇱 [Help] Looking for Montessori-style preschool - by @lisa.bali</li>
+<li>🇰🇷 [모임공지] 4월 18일 목 10시 짱구 The Garden 앞 커피밋업! - by @balimum</li>
+</ul>
+<form style="margin-top: 1rem;">
+<input placeholder="닉네임 또는 이름" style="padding: 0.5rem; width: 150px;" type="text"/>
+<input placeholder="글 내용을 입력하세요" style="padding: 0.5rem; width: 60%;" type="text"/>
+<button style="padding: 0.5rem 1rem; background: #ff884d; color: white; border: none; border-radius: 6px;" type="submit">등록</button>
+</form>
+</section>
+<section style="width: 32%; min-width: 300px; background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+<h2>🎉 이벤트 게시판 (Events)</h2>
+<ul style="list-style-type: none; padding-left: 0;">
+<li>🇸🇬 [이벤트] 거북이 방사 체험 - 발리 서부 해변 4/22 오전 9시! - by @eco.family</li>
+<li>🇰🇷 [추천] 아이랑 꼭 가볼만한 카페: Udara Kids Pool Café - by @bali엄마</li>
+<li>🇯🇵 [체험] 발리 요가숲 유아 명상 클래스 (무료 오픈데이) - by @hana_tokyo</li>
+</ul>
+</section>
+<section style="width: 32%; min-width: 300px; background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+<h2>🎁 물품 나눔 게시판 (Giveaway Board)</h2>
+<ul style="list-style-type: none; padding-left: 0;">
+<li>🇨🇦 [나눔] 유아용 비치매트 &amp; 스노클 세트 (짱구) - by @sophie.toronto</li>
+<li>🇺🇸 [Free] English baby books (10 pcs) for giveaway – Ubud - by @noahmom</li>
+<li>🇸🇬 [드림] 아기용 보행기랑 실내 텐트 드려요 (사누르) - by @ashley.sg</li>
+</ul>
+</section>
+</div>
+<footer style="background:#f2f2f2; padding: 2rem; text-align: center; font-size: 0.9rem; color: #555; margin-top: 3rem;">
+<strong>FunnyFolks EDU</strong><br/>
+    Email: contact@funnyfolks.io | Instagram: @funnyfolks.global<br/>
+    © 2025 FunnyFolks. All rights reserved.
+  </footer>
+</body>
+</html>
