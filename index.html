@@ -107,7 +107,7 @@
             height: 20px;
         }
         .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1537996194471-e657df975ab4');
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1537996194471-e657df975ab4');
             background-size: cover;
             background-position: center;
             padding: 8rem 0;
@@ -115,36 +115,48 @@
             color: white;
             position: relative;
         }
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
         .hero-section h1 {
-            font-size: 3.2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
+            font-size: 4.5rem;
+            font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             letter-spacing: -0.5px;
+            line-height: 1.2;
+            text-align: center;
+            margin: 0;
         }
         .hero-section p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.7;
+            font-size: 1.8rem;
+            line-height: 1.5;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            opacity: 0.95;
+            opacity: 0.9;
             color: white;
             font-weight: 300;
+            max-width: 100%;
+            text-align: center;
+            margin: 0;
+            white-space: nowrap;
         }
         .explore-btn {
             background: #FF6B35;
             color: white;
-            padding: 1rem 2.5rem;
+            padding: 0.8rem 2rem;
             border-radius: 30px;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
             display: inline-block;
             font-weight: 500;
             box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            margin-top: 1rem;
         }
         .explore-btn:hover {
             background: #ff8557;
@@ -152,38 +164,44 @@
             box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
         }
         .category-buttons {
+            position: absolute;
+            top: 20px;
+            left: 60px;
+            z-index: 1000;
             display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 2rem 0;
             flex-wrap: wrap;
-            padding: 1rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            gap: 10px;
+            max-width: calc(100% - 80px);
         }
         .category-btn {
-            padding: 0.8rem 1.5rem;
+            background-color: white;
             border: none;
             border-radius: 25px;
-            background: white;
-            color: #333;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 12px 20px;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
-        .category-btn i {
-            font-size: 1.2rem;
-        }
-        .category-btn:hover, .category-btn.active {
-            background: #FF6B35;
+        .category-btn.active {
+            background-color: #F47458;
             color: white;
+        }
+        .category-btn:hover {
+            background-color: #f0f0f0;
             transform: translateY(-2px);
         }
+        .category-btn.active:hover {
+            background-color: #e56447;
+        }
+        .category-btn i {
+            font-size: 16px;
+        }
         #map {
+            position: relative;
             height: 500px;
             width: 100%;
             border-radius: 12px;
@@ -887,7 +905,7 @@
             display: none;
         }
 
-        /* 필터 스타일 추가 */
+        /* 필터 스타일 개선 */
         .filters-section {
             margin: 2rem auto;
             max-width: 1200px;
@@ -898,6 +916,7 @@
             align-items: center;
             gap: 1rem;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
         .filters-title {
             color: #FF6B35;
@@ -906,12 +925,14 @@
             padding: 0.5rem 1rem;
             border: 2px solid #FF6B35;
             border-radius: 20px;
+            white-space: nowrap;
         }
         .search-filter-container {
             flex-grow: 1;
             position: relative;
             display: flex;
             align-items: center;
+            gap: 1rem;
         }
         .search-filter-input {
             width: 100%;
@@ -927,24 +948,112 @@
             border-color: #FF6B35;
             box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.1);
         }
-        .add-filter-btn {
-            position: absolute;
-            right: 10px;
-            background: #FF6B35;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
+        .filter-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .filter-dropdown-btn {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            border: none;
-            cursor: pointer;
+            gap: 0.5rem;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
-        .add-filter-btn:hover {
-            background: #ff8557;
-            transform: scale(1.1);
+        .filter-dropdown-btn:hover {
+            border-color: #FF6B35;
+        }
+        .filter-dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 200px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+        }
+        .filter-dropdown-content.show {
+            display: block;
+        }
+        .filter-group {
+            border-bottom: 1px solid #eee;
+            padding: 0.8rem;
+        }
+        .filter-group:last-child {
+            border-bottom: none;
+        }
+        .filter-group-title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0;
+        }
+        .filter-option label {
+            cursor: pointer;
+            user-select: none;
+        }
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .active-filter-tag {
+            background: #f0f0f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .active-filter-tag button {
+            border: none;
+            background: none;
+            padding: 0;
+            cursor: pointer;
+            color: #666;
+        }
+        .search-results-preview {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 0.5rem;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+        .search-results-preview.show {
+            display: block;
+        }
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .search-result-item:hover {
+            background: #f9f9f9;
+        }
+        .search-result-item:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
@@ -982,28 +1091,83 @@
     </div>
 
     <div class="hero-section">
-        <h1 data-lang="en">Where Family Adventures Begin</h1>
-        <h1 data-lang="ko">가족 모험이 시작되는 곳</h1>
-        <p data-lang="en">Join our community of traveling families sharing real experiences and stories.</p>
-        <p data-lang="ko">실제 경험과 이야기를 공유하는 여행하는 가족들의 커뮤니티에 참여하세요.</p>
-        <a href="#explore" class="explore-btn" data-lang="en">Explore Now</a>
-        <a href="#explore" class="explore-btn" data-lang="ko">지금 탐험하기</a>
+        <div class="hero-content">
+            <h1 data-lang="en">Where Family Adventures Begin</h1>
+            <h1 data-lang="ko">가족 모험이 시작되는 곳</h1>
+            <p data-lang="en">Join our community of traveling families sharing real experiences and stories.</p>
+            <p data-lang="ko">실제 경험과 이야기를 공유하는 여행하는 가족들의 커뮤니티에 참여하세요.</p>
+            <a href="#explore" class="explore-btn" data-lang="en">Explore Now</a>
+            <a href="#explore" class="explore-btn" data-lang="ko">지금 탐험하기</a>
+        </div>
     </div>
 
-    <!-- 필터 섹션 추가 -->
+    <!-- 필터 섹션 HTML -->
     <div class="filters-section">
         <div class="filters-header">
             <span class="filters-title" data-lang="en">Filters</span>
             <span class="filters-title" data-lang="ko">필터</span>
             <div class="search-filter-container">
                 <input type="text" class="search-filter-input" 
-                       data-lang="en" placeholder="Search or filter"
-                       data-lang-ko="국가 검색 또는 필터">
-                <button class="add-filter-btn">
-                    <i class="fas fa-plus"></i>
-                </button>
+                       data-lang="en" placeholder="Search destinations..."
+                       data-lang-ko="여행지 검색...">
+                <div class="filter-dropdown">
+                    <button class="filter-dropdown-btn">
+                        <i class="fas fa-globe"></i>
+                        <span data-lang="en">Region</span>
+                        <span data-lang="ko">지역</span>
+                    </button>
+                    <div class="filter-dropdown-content" id="regionFilter">
+                        <div class="filter-group">
+                            <div class="filter-group-title" data-lang="en">Popular</div>
+                            <div class="filter-group-title" data-lang="ko">인기 지역</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="bali">
+                                <label for="bali">Bali</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="seoul">
+                                <label for="seoul">Seoul</label>
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <div class="filter-group-title" data-lang="en">Asia</div>
+                            <div class="filter-group-title" data-lang="ko">아시아</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="korea">
+                                <label for="korea">Korea</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="japan">
+                                <label for="japan">Japan</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-dropdown">
+                    <button class="filter-dropdown-btn">
+                        <i class="fas fa-child"></i>
+                        <span data-lang="en">Age</span>
+                        <span data-lang="ko">연령대</span>
+                    </button>
+                    <div class="filter-dropdown-content" id="ageFilter">
+                        <div class="filter-option">
+                            <input type="checkbox" id="age0-2">
+                            <label for="age0-2">0-2</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="age3-5">
+                            <label for="age3-5">3-5</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="age6-12">
+                            <label for="age6-12">6-12</label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="active-filters" id="activeFilters"></div>
+        <div class="search-results-preview" id="searchResults"></div>
     </div>
 
     <div class="container">
@@ -1106,78 +1270,47 @@
             </div>
         </div>
 
-        <div class="filter-section">
-            <h2>
-                <span data-lang="en">Filter by Children Age & Facility Type</span>
-                <span data-lang="ko">자녀 연령 및 시설 유형 필터</span>
-            </h2>
-            <div class="filter-container">
-                <select class="filter-select" id="ageFilter">
-                    <option value="">All Ages</option>
-                    <option value="0-2">0-2 years</option>
-                    <option value="3-5">3-5 years</option>
-                    <option value="6-12">6-12 years</option>
-                    <option value="13-18">13-18 years</option>
-                </select>
-                <select class="filter-select" id="typeFilter">
-                    <option value="">All Types</option>
-                    <option value="education">Education</option>
-                    <option value="activities">Activities</option>
-                    <option value="healthcare">Healthcare</option>
-                    <option value="accommodation">Accommodation</option>
-                </select>
+        <div style="position: relative;">
+            <div id="map"></div>
+            <div class="category-buttons">
+                <button class="category-btn active">
+                    <i class="fas fa-globe"></i>
+                    전체보기
+                </button>
+                <button class="category-btn">
+                    <i class="fas fa-utensils"></i>
+                    키즈식당
+                </button>
+                <button class="category-btn">
+                    <i class="fas fa-coffee"></i>
+                    키즈카페
+                </button>
+                <button class="category-btn">
+                    <i class="fas fa-child"></i>
+                    놀이터/공원
+                </button>
+                <button class="category-btn">
+                    <i class="fas fa-hospital"></i>
+                    소아과/병원
+                </button>
+                <button class="category-btn">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                    약국
+                </button>
+                <button class="category-btn">
+                    <i class="fas fa-school"></i>
+                    교육시설
+                </button>
+                <button class="category-btn">
+                    <i class="fas fa-bed"></i>
+                    키즈호텔
+                </button>
+                <button class="category-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    유아용품점
+                </button>
             </div>
         </div>
-
-        <div class="category-buttons">
-            <button class="category-btn active" data-category="all">
-                <i class="fas fa-globe"></i>
-                <span data-lang="en">All</span>
-                <span data-lang="ko">전체보기</span>
-            </button>
-            <button class="category-btn" data-category="kids-restaurant">
-                <i class="fas fa-utensils"></i>
-                <span data-lang="en">Kids Restaurant</span>
-                <span data-lang="ko">키즈식당</span>
-            </button>
-            <button class="category-btn" data-category="kids-cafe">
-                <i class="fas fa-coffee"></i>
-                <span data-lang="en">Kids Cafe</span>
-                <span data-lang="ko">키즈카페</span>
-            </button>
-            <button class="category-btn" data-category="playground">
-                <i class="fas fa-child"></i>
-                <span data-lang="en">Playground/Park</span>
-                <span data-lang="ko">놀이터/공원</span>
-            </button>
-            <button class="category-btn" data-category="hospital">
-                <i class="fas fa-hospital"></i>
-                <span data-lang="en">Pediatric/Hospital</span>
-                <span data-lang="ko">소아과/병원</span>
-            </button>
-            <button class="category-btn" data-category="pharmacy">
-                <i class="fas fa-prescription-bottle-medical"></i>
-                <span data-lang="en">Pharmacy</span>
-                <span data-lang="ko">약국</span>
-            </button>
-            <button class="category-btn" data-category="education">
-                <i class="fas fa-school"></i>
-                <span data-lang="en">Education</span>
-                <span data-lang="ko">교육시설</span>
-            </button>
-            <button class="category-btn" data-category="accommodation">
-                <i class="fas fa-bed"></i>
-                <span data-lang="en">Kids Hotel</span>
-                <span data-lang="ko">키즈호텔</span>
-            </button>
-            <button class="category-btn" data-category="shopping">
-                <i class="fas fa-shopping-cart"></i>
-                <span data-lang="en">Baby Store</span>
-                <span data-lang="ko">유아용품점</span>
-            </button>
-        </div>
-
-        <div id="map"></div>
         <div id="location-list"></div>
 
         <div class="board-section">
@@ -2161,38 +2294,127 @@
 
         // 필터 기능 추가
         document.addEventListener('DOMContentLoaded', function() {
-            const filterInput = document.querySelector('.search-filter-input');
-            const addFilterBtn = document.querySelector('.add-filter-btn');
+            const filterDropdowns = document.querySelectorAll('.filter-dropdown-btn');
+            const searchInput = document.querySelector('.search-filter-input');
+            const searchResults = document.getElementById('searchResults');
+            const activeFilters = document.getElementById('activeFilters');
+            const filterOptions = document.querySelectorAll('.filter-option input');
             
-            // 검색어 입력 시 필터링
-            filterInput.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                // 여기에 실제 필터링 로직 구현
-                filterDestinations(searchTerm);
-            });
-            
-            // 필터 추가 버튼 클릭
-            addFilterBtn.addEventListener('click', function() {
-                // 필터 추가 모달 또는 드롭다운 표시
-                showFilterOptions();
-            });
-            
-            function filterDestinations(searchTerm) {
-                const destinations = document.querySelectorAll('.location-card');
-                destinations.forEach(dest => {
-                    const title = dest.querySelector('h3').textContent.toLowerCase();
-                    const description = dest.querySelector('p').textContent.toLowerCase();
-                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                        dest.style.display = '';
-                    } else {
-                        dest.style.display = 'none';
-                    }
+            // 드롭다운 토글
+            filterDropdowns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const content = this.nextElementSibling;
+                    document.querySelectorAll('.filter-dropdown-content').forEach(dropdown => {
+                        if (dropdown !== content) {
+                            dropdown.classList.remove('show');
+                        }
+                    });
+                    content.classList.toggle('show');
                 });
+            });
+            
+            // 검색 기능
+            searchInput.addEventListener('input', debounce(function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                if (searchTerm.length > 1) {
+                    // 실제 API 호출 또는 데이터 필터링
+                    showSearchResults(searchTerm);
+                } else {
+                    searchResults.classList.remove('show');
+                }
+            }, 300));
+            
+            // 필터 옵션 선택
+            filterOptions.forEach(option => {
+                option.addEventListener('change', function() {
+                    updateActiveFilters();
+                    filterDestinations();
+                });
+            });
+            
+            // 문서 클릭 시 드롭다운 닫기
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.filter-dropdown-content').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                });
+            });
+            
+            // 디바운스 함수
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
             }
             
-            function showFilterOptions() {
-                // 필터 옵션 모달 또는 드롭다운 표시 로직
-                alert('필터 옵션이 곧 추가될 예정입니다.');
+            // 검색 결과 표시
+            function showSearchResults(searchTerm) {
+                // 예시 데이터
+                const results = [
+                    { name: 'Bali, Indonesia', type: 'Popular Destination' },
+                    { name: 'Seoul, Korea', type: 'Popular Destination' },
+                    { name: 'Tokyo, Japan', type: 'Popular Destination' }
+                ].filter(item => item.name.toLowerCase().includes(searchTerm));
+                
+                if (results.length > 0) {
+                    searchResults.innerHTML = results.map(result => `
+                        <div class="search-result-item">
+                            <div>${result.name}</div>
+                            <small>${result.type}</small>
+                        </div>
+                    `).join('');
+                    searchResults.classList.add('show');
+                } else {
+                    searchResults.classList.remove('show');
+                }
+            }
+            
+            // 활성 필터 업데이트
+            function updateActiveFilters() {
+                const activeFiltersList = [];
+                filterOptions.forEach(option => {
+                    if (option.checked) {
+                        activeFiltersList.push({
+                            id: option.id,
+                            label: option.nextElementSibling.textContent
+                        });
+                    }
+                });
+                
+                activeFilters.innerHTML = activeFiltersList.map(filter => `
+                    <div class="active-filter-tag">
+                        ${filter.label}
+                        <button onclick="removeFilter('${filter.id}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+            
+            // 필터 제거
+            window.removeFilter = function(filterId) {
+                const filter = document.getElementById(filterId);
+                if (filter) {
+                    filter.checked = false;
+                    updateActiveFilters();
+                    filterDestinations();
+                }
+            };
+            
+            // 목적지 필터링
+            function filterDestinations() {
+                const selectedFilters = Array.from(filterOptions)
+                    .filter(option => option.checked)
+                    .map(option => option.id);
+                
+                // 여기에 실제 필터링 로직 구현
+                console.log('Selected filters:', selectedFilters);
             }
         });
     </script>
