@@ -886,6 +886,66 @@
         [data-lang="ko"] {
             display: none;
         }
+
+        /* 필터 스타일 추가 */
+        .filters-section {
+            margin: 2rem auto;
+            max-width: 1200px;
+            padding: 0 1rem;
+        }
+        .filters-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .filters-title {
+            color: #FF6B35;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border: 2px solid #FF6B35;
+            border-radius: 20px;
+        }
+        .search-filter-container {
+            flex-grow: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-filter-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            padding-right: 3rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-filter-input:focus {
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.1);
+        }
+        .add-filter-btn {
+            position: absolute;
+            right: 10px;
+            background: #FF6B35;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .add-filter-btn:hover {
+            background: #ff8557;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -922,18 +982,28 @@
     </div>
 
     <div class="hero-section">
-        <h1>
-            <span data-lang="en">Where Family Adventures Begin 🧭</span>
-            <span data-lang="ko">가족 모험이 시작되는 곳 🧭</span>
-        </h1>
-        <p>
-            <span data-lang="en">Discover trusted tips, local gems, and real community stories — made for traveling families, by traveling families.</span>
-            <span data-lang="ko">여행 가족들을 위한, 여행 가족들이 만든 신뢰할 수 있는 팁과 현지 보물, 그리고 진정한 커뮤니티 스토리를 발견하세요.</span>
-        </p>
-        <a href="#" class="explore-btn">
-            <span data-lang="en">Explore Now</span>
-            <span data-lang="ko">지금 탐험하기</span>
-        </a>
+        <h1 data-lang="en">Where Family Adventures Begin</h1>
+        <h1 data-lang="ko">가족 모험이 시작되는 곳</h1>
+        <p data-lang="en">Join our community of traveling families sharing real experiences and stories.</p>
+        <p data-lang="ko">실제 경험과 이야기를 공유하는 여행하는 가족들의 커뮤니티에 참여하세요.</p>
+        <a href="#explore" class="explore-btn" data-lang="en">Explore Now</a>
+        <a href="#explore" class="explore-btn" data-lang="ko">지금 탐험하기</a>
+    </div>
+
+    <!-- 필터 섹션 추가 -->
+    <div class="filters-section">
+        <div class="filters-header">
+            <span class="filters-title" data-lang="en">Filters</span>
+            <span class="filters-title" data-lang="ko">필터</span>
+            <div class="search-filter-container">
+                <input type="text" class="search-filter-input" 
+                       data-lang="en" placeholder="Search or filter"
+                       data-lang-ko="국가 검색 또는 필터">
+                <button class="add-filter-btn">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -2087,6 +2157,43 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateFilterOptions();
             // ... existing DOMContentLoaded code ...
+        });
+
+        // 필터 기능 추가
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterInput = document.querySelector('.search-filter-input');
+            const addFilterBtn = document.querySelector('.add-filter-btn');
+            
+            // 검색어 입력 시 필터링
+            filterInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                // 여기에 실제 필터링 로직 구현
+                filterDestinations(searchTerm);
+            });
+            
+            // 필터 추가 버튼 클릭
+            addFilterBtn.addEventListener('click', function() {
+                // 필터 추가 모달 또는 드롭다운 표시
+                showFilterOptions();
+            });
+            
+            function filterDestinations(searchTerm) {
+                const destinations = document.querySelectorAll('.location-card');
+                destinations.forEach(dest => {
+                    const title = dest.querySelector('h3').textContent.toLowerCase();
+                    const description = dest.querySelector('p').textContent.toLowerCase();
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        dest.style.display = '';
+                    } else {
+                        dest.style.display = 'none';
+                    }
+                });
+            }
+            
+            function showFilterOptions() {
+                // 필터 옵션 모달 또는 드롭다운 표시 로직
+                alert('필터 옵션이 곧 추가될 예정입니다.');
+            }
         });
     </script>
 
