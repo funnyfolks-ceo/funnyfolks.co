@@ -494,19 +494,29 @@
         }
         .hotplace-content {
             padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 200px);
         }
         .hotplace-content h3 {
             margin: 0 0 0.5rem 0;
             color: #333;
+            font-size: 1.4rem;
         }
         .hotplace-content p {
             color: #666;
             margin-bottom: 1rem;
+            flex-grow: 0;
         }
         .hotplace-tags {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            justify-content: flex-start;
+            align-items: center;
         }
         .hotplace-tags span {
             background: #FFE5D9;
@@ -514,15 +524,76 @@
             border-radius: 15px;
             font-size: 0.9rem;
             color: #FF6B35;
+            display: inline-flex;
+            align-items: center;
+        }
+        .recommended-by {
+            margin: 1rem 0;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .recommended-by p.section-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .influencer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .influencer-mini {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.8rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .influencer-mini .profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 140px;
+            padding-right: 0.5rem;
+            border-right: 1px solid #eee;
+        }
+        .influencer-mini img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .influencer-mini .name {
+            font-size: 0.9rem;
+            margin: 0;
+            color: #333;
+            font-weight: 500;
+        }
+        .influencer-mini .comment {
+            font-size: 0.9rem;
+            margin: 0;
+            color: #666;
+            flex: 1;
+            line-height: 1.5;
+            text-align: left;
+            padding-left: 0.5rem;
         }
         .detail-button {
             display: inline-block;
-            padding: 0.8rem 1.5rem;
+            width: 100%;
+            padding: 0.8rem;
             background: #FF6B35;
             color: white;
             text-decoration: none;
             border-radius: 25px;
+            text-align: center;
             transition: background 0.3s ease;
+            margin-top: auto;
         }
         .detail-button:hover {
             background: #ff8557;
@@ -867,26 +938,37 @@
 
     <div class="container">
         <div class="destinations-section">
-            <h2>인기 여행지 | Popular Destinations</h2>
+            <h2>
+                <span data-lang="en">Popular Destinations</span>
+                <span data-lang="ko">인기 여행지</span>
+            </h2>
             <div class="destinations-grid">
                 <div class="destination-card">
                     <img src="https://images.unsplash.com/photo-1558005530-a7958896ec60" alt="Bali">
                     <div class="destination-content">
-                        <h3>발리 | Bali</h3>
-                        <p>천국에서 유치원, 어린이집, 가족 커뮤니티를 탐험하세요.<br>
-                        Explore kindergartens, daycares and family communities in paradise.</p>
+                        <h3>
+                            <span data-lang="en">Bali</span>
+                            <span data-lang="ko">발리</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">Explore kindergartens, daycares and family communities in paradise.</span>
+                            <span data-lang="ko">천국 같은 곳에서 유치원, 데이케어와 가족 커뮤니티를 만나보세요.</span>
+                        </p>
                         <div class="destination-stats">
                             <div class="stat">
                                 <i class="fas fa-user-friends"></i>
-                                <span>2.5천 가족 | 2.5k Families</span>
+                                <span data-lang="en">2.5k Families</span>
+                                <span data-lang="ko">2.5천 가족</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-school"></i>
-                                <span>45개 학교 | 45 Schools</span>
+                                <span data-lang="en">45 Schools</span>
+                                <span data-lang="ko">45개 학교</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-star"></i>
-                                <span>4.8/5 평점 | 4.8/5 Rating</span>
+                                <span data-lang="en">4.8/5 Rating</span>
+                                <span data-lang="ko">평점 4.8/5</span>
                             </div>
                         </div>
                     </div>
@@ -894,21 +976,29 @@
                 <div class="destination-card">
                     <img src="https://images.unsplash.com/photo-1538669715315-155098f0fb1d" alt="Seoul">
                     <div class="destination-content">
-                        <h3>서울 | Seoul</h3>
-                        <p>발리 현지 가이드가 추천하는 교육 옵션과 한국 가족 생활 팁을 발견하세요.<br>
-                        Discover expat-friendly educational options and Korean family life tips.</p>
+                        <h3>
+                            <span data-lang="en">Seoul</span>
+                            <span data-lang="ko">서울</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">Discover expat-friendly educational options and Korean family life tips.</span>
+                            <span data-lang="ko">외국인 친화적인 교육 옵션과 한국 가정생활 팁을 발견하세요.</span>
+                        </p>
                         <div class="destination-stats">
                             <div class="stat">
                                 <i class="fas fa-user-friends"></i>
-                                <span>5천 가족 | 5k Families</span>
+                                <span data-lang="en">5k Families</span>
+                                <span data-lang="ko">5천 가족</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-school"></i>
-                                <span>120개 학교 | 120 Schools</span>
+                                <span data-lang="en">120 Schools</span>
+                                <span data-lang="ko">120개 학교</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-star"></i>
-                                <span>4.9/5 평점 | 4.9/5 Rating</span>
+                                <span data-lang="en">4.9/5 Rating</span>
+                                <span data-lang="ko">평점 4.9/5</span>
                             </div>
                         </div>
                     </div>
@@ -916,21 +1006,29 @@
                 <div class="destination-card">
                     <img src="https://images.unsplash.com/photo-1598935898639-81586f7d2129" alt="Chiang Mai">
                     <div class="destination-content">
-                        <h3>치앙마이 | Chiang Mai</h3>
-                        <p>노마드 가족을 위한 자연 기반의 학교와 창의적인 커뮤니티를 발견하세요.<br>
-                        A haven for nomad families, with nature-based schools and creative hubs.</p>
+                        <h3>
+                            <span data-lang="en">Chiang Mai</span>
+                            <span data-lang="ko">치앙마이</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">A haven for nomad families, with nature-based schools and creative hubs.</span>
+                            <span data-lang="ko">자연 기반 학교와 창의적인 허브가 있는 노마드 가족들의 천국.</span>
+                        </p>
                         <div class="destination-stats">
                             <div class="stat">
                                 <i class="fas fa-user-friends"></i>
-                                <span>1.8천 가족 | 1.8k Families</span>
+                                <span data-lang="en">1.8k Families</span>
+                                <span data-lang="ko">1.8천 가족</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-school"></i>
-                                <span>30개 학교 | 30 Schools</span>
+                                <span data-lang="en">30 Schools</span>
+                                <span data-lang="ko">30개 학교</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-star"></i>
-                                <span>4.7/5 평점 | 4.7/5 Rating</span>
+                                <span data-lang="en">4.7/5 Rating</span>
+                                <span data-lang="ko">평점 4.7/5</span>
                             </div>
                         </div>
                     </div>
@@ -939,21 +1037,24 @@
         </div>
 
         <div class="filter-section">
-            <h2>아이 연령 및 시설 유형별 필터 | Filter by Children Age & Facility Type</h2>
+            <h2>
+                <span data-lang="en">Filter by Children Age & Facility Type</span>
+                <span data-lang="ko">자녀 연령 및 시설 유형 필터</span>
+            </h2>
             <div class="filter-container">
-                <select class="filter-select">
-                    <option value="">전체 연령 | All Ages</option>
-                    <option value="0-2">0-2세 | 0-2 years</option>
-                    <option value="3-5">3-5세 | 3-5 years</option>
-                    <option value="6-12">6-12세 | 6-12 years</option>
-                    <option value="13-18">13-18세 | 13-18 years</option>
+                <select class="filter-select" id="ageFilter">
+                    <option value="">All Ages</option>
+                    <option value="0-2">0-2 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="6-12">6-12 years</option>
+                    <option value="13-18">13-18 years</option>
                 </select>
-                <select class="filter-select">
-                    <option value="">전체 유형 | All Types</option>
-                    <option value="education">교육 | Education</option>
-                    <option value="activities">활동 | Activities</option>
-                    <option value="healthcare">의료 | Healthcare</option>
-                    <option value="accommodation">숙박 | Accommodation</option>
+                <select class="filter-select" id="typeFilter">
+                    <option value="">All Types</option>
+                    <option value="education">Education</option>
+                    <option value="activities">Activities</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="accommodation">Accommodation</option>
                 </select>
             </div>
         </div>
@@ -1041,7 +1142,10 @@
                                     <span data-lang="en">Sharing my Bali Waterbom experience!</span>
                                     <span data-lang="ko">발리 워터밤 후기 공유해요!</span>
                                 </span>
-                                <span class="board-meta">Kim Traveler | 2024.03.15 | Views 128</span>
+                                <span class="board-meta">
+                                    <span data-lang="en">Kim Traveler | 2024.03.15 | Views 128</span>
+                                    <span data-lang="ko">김여행러 | 2024.03.15 | 조회수 128</span>
+                                </span>
                             </div>
                             <div class="board-stats">
                                 <span><i class="fas fa-heart"></i> 24</span>
@@ -1049,10 +1153,16 @@
                             </div>
                         </div>
                         <div class="board-item">
-                            <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="프로필" class="board-profile">
+                            <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Profile" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">우붓에서 아이와 함께하는 문화체험 추천 | Recommended cultural experiences with kids in Ubud</span>
-                                <span class="board-meta">박엄마 | 2024.03.14 | 조회 | Views 156</span>
+                                <span class="board-title">
+                                    <span data-lang="en">Recommended cultural experiences with kids in Ubud</span>
+                                    <span data-lang="ko">우붓에서 아이와 함께하는 문화체험 추천</span>
+                                </span>
+                                <span class="board-meta">
+                                    <span data-lang="en">Park Mom | 2024.03.14 | Views 156</span>
+                                    <span data-lang="ko">박맘 | 2024.03.14 | 조회수 156</span>
+                                </span>
                             </div>
                             <div class="board-stats">
                                 <span><i class="fas fa-heart"></i> 31</span>
@@ -1060,10 +1170,16 @@
                             </div>
                         </div>
                         <div class="board-item">
-                            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="프로필" class="board-profile">
+                            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Profile" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">발리 현지 유치원 체험기 | Experience at a local kindergarten in Bali</span>
-                                <span class="board-meta">이세계 | 2024.03.13 | 조회 | Views 203</span>
+                                <span class="board-title">
+                                    <span data-lang="en">Experience at a local kindergarten in Bali</span>
+                                    <span data-lang="ko">발리 현지 유치원 체험기</span>
+                                </span>
+                                <span class="board-meta">
+                                    <span data-lang="en">Lee World | 2024.03.13 | Views 203</span>
+                                    <span data-lang="ko">이월드 | 2024.03.13 | 조회수 203</span>
+                                </span>
                             </div>
                             <div class="board-stats">
                                 <span><i class="fas fa-heart"></i> 45</span>
@@ -1100,28 +1216,49 @@
                     </div>
                     <div class="board-list">
                         <div class="board-item">
-                            <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="프로필" class="board-profile">
+                            <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Profile" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[판매 | Sale] 유아용 비치텐트 판매합니다 | Selling baby beach tent</span>
-                                <span class="board-meta">해변러버 | 2024.03.15 | 조회 | Views 89</span>
+                                <span class="board-title">
+                                    <span data-lang="en">[Sale] Selling baby beach tent</span>
+                                    <span data-lang="ko">[판매] 아기 비치텐트 판매합니다</span>
+                                </span>
+                                <span class="board-meta">
+                                    <span data-lang="en">Beach Lover | 2024.03.15 | Views 89</span>
+                                    <span data-lang="ko">비치러버 | 2024.03.15 | 조회수 89</span>
+                                </span>
                             </div>
-                            <div class="board-price">150,000원 | ₩150,000</div>
+                            <div class="board-price">Rp 1,750,000</div>
                         </div>
                         <div class="board-item">
-                            <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="프로필" class="board-profile">
+                            <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="Profile" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[나눔 | Free] 유아 수영용품 나눔해요 | Sharing baby swimming items</span>
-                                <span class="board-meta">물놀이맘 | 2024.03.14 | 조회 | Views 134</span>
+                                <span class="board-title">
+                                    <span data-lang="en">[Free] Sharing baby swimming items</span>
+                                    <span data-lang="ko">[나눔] 아기 수영용품 나눔해요</span>
+                                </span>
+                                <span class="board-meta">
+                                    <span data-lang="en">Water Mom | 2024.03.14 | Views 134</span>
+                                    <span data-lang="ko">워터맘 | 2024.03.14 | 조회수 134</span>
+                                </span>
                             </div>
-                            <div class="board-price">나눔 | Free</div>
+                            <div class="board-price">
+                                <span data-lang="en">Free</span>
+                                <span data-lang="ko">무료나눔</span>
+                            </div>
                         </div>
                         <div class="board-item">
-                            <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="프로필" class="board-profile">
+                            <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="Profile" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[판매 | Sale] 아기 캐리어 거의 새것 | Baby carrier almost new</span>
-                                <span class="board-meta">육아전문 | 2024.03.13 | 조회 | Views 167</span>
+                                <span class="board-title">
+                                    <span data-lang="en">[Sale] Baby carrier almost new</span>
+                                    <span data-lang="ko">[판매] 아기 캐리어 거의 새것</span>
+                                </span>
+                                <span class="board-meta">
+                                    <span data-lang="en">Parenting Pro | 2024.03.13 | Views 167</span>
+                                    <span data-lang="ko">육아프로 | 2024.03.13 | 조회수 167</span>
+                                </span>
                             </div>
-                            <div class="board-price">80,000원 | ₩80,000</div>
+                            <div class="board-price">Rp 950,000</div>
                         </div>
                     </div>
                     <div class="pagination">
@@ -1153,26 +1290,44 @@
                     </div>
                     <div class="board-list">
                         <div class="board-item">
-                            <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="프로필" class="board-profile">
+                            <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="Profile" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[진행중 | Ongoing] 발리 키즈카페 무료 이용권 이벤트 | Bali Kids Cafe Free Pass Event</span>
-                                <span class="board-meta">이벤트킹 | 2024.03.15 | 조회 | Views 423</span>
+                                <span class="board-title">
+                                    <span data-lang="en">[Ongoing] Bali Kids Cafe Free Pass Event</span>
+                                    <span data-lang="ko">[진행중] 발리 키즈카페 무료 이용권 이벤트</span>
+                                </span>
+                                <span class="board-meta">
+                                    <span data-lang="en">Event King | 2024.03.15 | Views 423</span>
+                                    <span data-lang="ko">이벤트킹 | 2024.03.15 | 조회수 423</span>
+                                </span>
                             </div>
                             <div class="board-date">~03/31</div>
                         </div>
                         <div class="board-item">
-                            <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="프로필" class="board-profile">
+                            <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="Profile" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[모집 | Recruiting] 발리 가족사진 무료 촬영 이벤트 | Free Family Photo Session in Bali</span>
-                                <span class="board-meta">포토그래퍼 | 2024.03.14 | 조회 | Views 356</span>
+                                <span class="board-title">
+                                    <span data-lang="en">[Recruiting] Free Family Photo Session in Bali</span>
+                                    <span data-lang="ko">[모집중] 발리 가족사진 무료 촬영 이벤트</span>
+                                </span>
+                                <span class="board-meta">
+                                    <span data-lang="en">Photographer | 2024.03.14 | Views 356</span>
+                                    <span data-lang="ko">포토그래퍼 | 2024.03.14 | 조회수 356</span>
+                                </span>
                             </div>
                             <div class="board-date">~03/25</div>
                         </div>
                         <div class="board-item">
-                            <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="프로필" class="board-profile">
+                            <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="Profile" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[진행중 | Ongoing] 우붓 문화체험 50% 할인 | Ubud Cultural Experience 50% Off</span>
-                                <span class="board-meta">문화나눔 | 2024.03.13 | 조회 | Views 289</span>
+                                <span class="board-title">
+                                    <span data-lang="en">[Ongoing] Ubud Cultural Experience 50% Off</span>
+                                    <span data-lang="ko">[진행중] 우붓 문화체험 50% 할인</span>
+                                </span>
+                                <span class="board-meta">
+                                    <span data-lang="en">Culture Share | 2024.03.13 | Views 289</span>
+                                    <span data-lang="ko">컬처쉐어 | 2024.03.13 | 조회수 289</span>
+                                </span>
                             </div>
                             <div class="board-date">~03/20</div>
                         </div>
@@ -1206,7 +1361,7 @@
                         </h3>
                         <p>
                             <span data-lang="en">A signature attraction where you can connect with nature</span>
-                            <span data-lang="ko">자연과 교감할 수 있는 발리의 대표 명소</span>
+                            <span data-lang="ko">자연과 교감할 수 있는 대표 명소</span>
                         </p>
                         <div class="hotplace-tags">
                             <span data-lang="en">#nature</span>
@@ -1216,19 +1371,42 @@
                             <span data-lang="en">#ubud</span>
                             <span data-lang="ko">#우붓</span>
                         </div>
-                        <div class="influencer-reviews">
-                            <div class="influencer-review">
-                                <div class="reviewer-info">
-                                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Sarah Kim">
-                                    <div>
-                                        <div class="reviewer-name">Sarah Kim</div>
-                                        <div class="reviewer-handle">@sarahkim_family</div>
+                        <div class="recommended-by">
+                            <p class="section-title">
+                                <span data-lang="en">Recommended by:</span>
+                                <span data-lang="ko">추천인:</span>
+                            </p>
+                            <div class="influencer-list">
+                                <div class="influencer-mini">
+                                    <div class="profile">
+                                        <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Sarah Kim">
+                                        <p class="name">Sarah Kim</p>
                                     </div>
+                                    <p class="comment">
+                                        <span data-lang="en">"Perfect spot for kids to learn about nature and wildlife! Don't forget bananas! 🍌"</span>
+                                        <span data-lang="ko">"아이들이 자연과 야생동물에 대해 배우기 좋은 곳이에요! 바나나 잊지 마세요! 🍌"</span>
+                                    </p>
                                 </div>
-                                <p>
-                                    <span data-lang="en">"Perfect natural learning environment for kids! Safe interaction with monkeys and unique rainforest experience. Don't forget to bring bananas! 🍌"</span>
-                                    <span data-lang="ko">"아이들의 자연 학습장으로 최고예요! 원숭이들과 안전하게 교감할 수 있고, 열대우림 속에서 특별한 경험을 할 수 있어요. 꼭 바나나 🍌 챙겨가세요!"</span>
-                                </p>
+                                <div class="influencer-mini">
+                                    <div class="profile">
+                                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David Park">
+                                        <p class="name">David Park</p>
+                                    </div>
+                                    <p class="comment">
+                                        <span data-lang="en">"Great educational experience for families. The monkeys are very friendly!"</span>
+                                        <span data-lang="ko">"가족들에게 좋은 교육적 경험이에요. 원숭이들도 매우 친근해요!"</span>
+                                    </p>
+                                </div>
+                                <div class="influencer-mini">
+                                    <div class="profile">
+                                        <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Emma Lee">
+                                        <p class="name">Emma Lee</p>
+                                    </div>
+                                    <p class="comment">
+                                        <span data-lang="en">"Best time to visit is early morning. The forest walk is magical!"</span>
+                                        <span data-lang="ko">"이른 아침이 방문하기 가장 좋아요. 숲길 산책이 정말 환상적이에요!"</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <a href="#" class="detail-button">
@@ -1246,11 +1424,11 @@
                     <div class="hotplace-content">
                         <h3>
                             <span data-lang="en">Nusa Dua Beach</span>
-                            <span data-lang="ko">누사두아 해변</span>
+                            <span data-lang="ko">누사두아 비치</span>
                         </h3>
                         <p>
                             <span data-lang="en">Beautiful beach perfect for family activities</span>
-                            <span data-lang="ko">가족과 함께 즐기기 좋은 아름다운 해변</span>
+                            <span data-lang="ko">가족 활동하기 좋은 아름다운 해변</span>
                         </p>
                         <div class="hotplace-tags">
                             <span data-lang="en">#beach</span>
@@ -1259,6 +1437,44 @@
                             <span data-lang="ko">#가족여행</span>
                             <span data-lang="en">#nusadua</span>
                             <span data-lang="ko">#누사두아</span>
+                        </div>
+                        <div class="recommended-by">
+                            <p class="section-title">
+                                <span data-lang="en">Recommended by:</span>
+                                <span data-lang="ko">추천인:</span>
+                            </p>
+                            <div class="influencer-list">
+                                <div class="influencer-mini">
+                                    <div class="profile">
+                                        <img src="https://randomuser.me/api/portraits/women/23.jpg" alt="Lisa Chen">
+                                        <p class="name">Lisa Chen</p>
+                                    </div>
+                                    <p class="comment">
+                                        <span data-lang="en">"The safest beach for families with young children. Crystal clear waters!"</span>
+                                        <span data-lang="ko">"어린 아이가 있는 가족들에게 가장 안전한 해변이에요. 물이 정말 맑아요!"</span>
+                                    </p>
+                                </div>
+                                <div class="influencer-mini">
+                                    <div class="profile">
+                                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Mike Wilson">
+                                        <p class="name">Mike Wilson</p>
+                                    </div>
+                                    <p class="comment">
+                                        <span data-lang="en">"Great water activities for kids. The beach clubs are very family-friendly!"</span>
+                                        <span data-lang="ko">"아이들을 위한 수상 활동이 훌륭해요. 비치클럽도 가족 친화적이에요!"</span>
+                                    </p>
+                                </div>
+                                <div class="influencer-mini">
+                                    <div class="profile">
+                                        <img src="https://randomuser.me/api/portraits/women/52.jpg" alt="Jenny Park">
+                                        <p class="name">Jenny Park</p>
+                                    </div>
+                                    <p class="comment">
+                                        <span data-lang="en">"Perfect sunset spot with kids. Don't miss the evening beach walks!"</span>
+                                        <span data-lang="ko">"아이들과 함께하기 좋은 일몰 명소예요. 저녁 해변 산책은 꼭 해보세요!"</span>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <a href="#" class="detail-button">
                             <span data-lang="en">View Details</span>
@@ -1275,19 +1491,57 @@
                     <div class="hotplace-content">
                         <h3>
                             <span data-lang="en">Warung Restaurant</span>
-                            <span data-lang="ko">와루구 레스토랑</span>
+                            <span data-lang="ko">와룽 레스토랑</span>
                         </h3>
                         <p>
                             <span data-lang="en">Popular restaurant featuring local cuisine</span>
-                            <span data-lang="ko">지역 음식을 맛볼 수 있는 인기 맛집</span>
+                            <span data-lang="ko">현지 음식을 선보이는 인기 레스토랑</span>
                         </p>
                         <div class="hotplace-tags">
                             <span data-lang="en">#restaurant</span>
-                            <span data-lang="ko">#맛집</span>
+                            <span data-lang="ko">#레스토랑</span>
                             <span data-lang="en">#localfood</span>
-                            <span data-lang="ko">#로컬푸드</span>
+                            <span data-lang="ko">#현지음식</span>
                             <span data-lang="en">#familydining</span>
-                            <span data-lang="ko">#가족식당</span>
+                            <span data-lang="ko">#가족식사</span>
+                        </div>
+                        <div class="recommended-by">
+                            <p class="section-title">
+                                <span data-lang="en">Recommended by:</span>
+                                <span data-lang="ko">추천인:</span>
+                            </p>
+                            <div class="influencer-list">
+                                <div class="influencer-mini">
+                                    <div class="profile">
+                                        <img src="https://randomuser.me/api/portraits/women/62.jpg" alt="Maria Kim">
+                                        <p class="name">Maria Kim</p>
+                                    </div>
+                                    <p class="comment">
+                                        <span data-lang="en">"Amazing kid-friendly menu with mild spice options. The staff is super friendly!"</span>
+                                        <span data-lang="ko">"아이들을 위한 순한 맛 메뉴가 있어요. 직원들도 정말 친절해요!"</span>
+                                    </p>
+                                </div>
+                                <div class="influencer-mini">
+                                    <div class="profile">
+                                        <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Tom Lee">
+                                        <p class="name">Tom Lee</p>
+                                    </div>
+                                    <p class="comment">
+                                        <span data-lang="en">"Best local food experience for families. They have great high chairs!"</span>
+                                        <span data-lang="ko">"가족들을 위한 최고의 현지 음식 경험이에요. 아이용 의자도 잘 갖춰져 있어요!"</span>
+                                    </p>
+                                </div>
+                                <div class="influencer-mini">
+                                    <div class="profile">
+                                        <img src="https://randomuser.me/api/portraits/women/72.jpg" alt="Sophie Wang">
+                                        <p class="name">Sophie Wang</p>
+                                    </div>
+                                    <p class="comment">
+                                        <span data-lang="en">"Clean, authentic, and perfect for families. Must try their kids' special menu!"</span>
+                                        <span data-lang="ko">"깨끗하고 정통적이며 가족들에게 완벽해요. 키즈 스페셜 메뉴는 꼭 드셔보세요!"</span>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <a href="#" class="detail-button">
                             <span data-lang="en">View Details</span>
@@ -1547,7 +1801,7 @@
             });
         });
 
-        // Firebase 설정
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
             authDomain: "your-project.firebaseapp.com",
@@ -1558,14 +1812,14 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        // 구글 로그인 기능
+        // Google login functionality
         const provider = new firebase.auth.GoogleAuthProvider();
         const loginButton = document.getElementById('loginButton');
         const userProfile = document.getElementById('userProfile');
         const socialLoginOptions = document.getElementById('socialLoginOptions');
         const googleLogin = document.getElementById('googleLogin');
 
-        // 로그인 버튼 클릭 이벤트
+        // Login button click event
         loginButton.addEventListener('click', () => {
             if (firebase.auth().currentUser) {
                 firebase.auth().signOut();
@@ -1574,7 +1828,7 @@
             }
         });
 
-        // 소셜 로그인 옵션 클릭 이벤트
+        // Social login option click event
         googleLogin.addEventListener('click', () => {
             firebase.auth().signInWithPopup(provider)
                 .then((result) => {
@@ -1583,20 +1837,22 @@
                     socialLoginOptions.classList.remove('show');
                 })
                 .catch((error) => {
-                    console.error('로그인 에러:', error);
+                    console.error('Login error:', error);
                 });
         });
 
-        // 사용자 프로필 업데이트 함수
+        // Update user profile function
         function updateUserProfile(user) {
             if (user) {
                 userProfile.style.display = 'flex';
                 document.getElementById('userPhoto').src = user.photoURL;
                 document.getElementById('userName').textContent = user.displayName;
-                loginButton.querySelector('span').textContent = '로그아웃';
+                loginButton.querySelector('span[data-lang="en"]').textContent = 'Logout';
+                loginButton.querySelector('span[data-lang="ko"]').textContent = '로그아웃';
             } else {
                 userProfile.style.display = 'none';
-                loginButton.querySelector('span').textContent = '로그인';
+                loginButton.querySelector('span[data-lang="en"]').textContent = 'Login';
+                loginButton.querySelector('span[data-lang="ko"]').textContent = '로그인';
             }
         }
 
@@ -1621,66 +1877,66 @@
         // 샘플 데이터
         const locations = [
             {
-                name: "발리 키즈 레스토랑",
+                name: "Kids Restaurant Bali",
                 category: "kids-restaurant",
                 position: [-8.3405, 115.0920],
-                description: "아이들을 위한 특별 메뉴와 놀이공간이 있는 가족 친화적 레스토랑",
+                description: "Family-friendly restaurant with special kids menu and play area",
                 image: "https://images.unsplash.com/photo-1544025162-d76694265947",
-                facilities: ["키즈메뉴", "유아용 의자", "놀이공간", "수유실", "유아용 식기"],
+                facilities: ["Kids Menu", "Baby Chair", "Play Area", "Nursing Room", "Kids Utensils"],
                 reviews: [
                     {
-                        author: "김가족",
+                        author: "Kim Family",
                         photo: "https://randomuser.me/api/portraits/women/1.jpg",
                         rating: 5,
-                        comment: "아이들이 좋아하는 메뉴가 많고, 놀이공간도 있어서 편하게 식사할 수 있었어요."
+                        comment: "Great menu selection for kids and convenient play area for comfortable dining."
                     }
                 ]
             },
             {
-                name: "우붓 키즈카페",
+                name: "Ubud Kids Cafe",
                 category: "kids-cafe",
                 position: [-8.5183, 115.2585],
-                description: "실내 놀이터와 교육 프로그램을 제공하는 프리미엄 키즈카페",
+                description: "Premium kids cafe with indoor playground and educational programs",
                 image: "https://images.unsplash.com/photo-1576334761529-0c2f3d3359ea",
-                facilities: ["실내놀이터", "교육프로그램", "수유실", "카페", "유아용화장실"],
+                facilities: ["Indoor Playground", "Educational Programs", "Nursing Room", "Cafe", "Kids Bathroom"],
                 reviews: [
                     {
-                        author: "이가족",
+                        author: "Lee Family",
                         photo: "https://randomuser.me/api/portraits/men/1.jpg",
                         rating: 5,
-                        comment: "깨끗하고 안전한 시설에서 아이들이 즐겁게 놀 수 있었습니다."
+                        comment: "Clean and safe facilities where children can play happily."
                     }
                 ]
             },
             {
-                name: "발리 국제병원",
+                name: "Bali International Hospital",
                 category: "hospital",
                 position: [-8.5833, 115.2000],
-                description: "24시간 소아과 진료가 가능한 국제병원",
+                description: "International hospital with 24-hour pediatric care",
                 image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
-                facilities: ["소아과", "응급실", "영어진료", "보험처리", "구급차"],
+                facilities: ["Pediatrics", "Emergency Room", "English Service", "Insurance Support", "Ambulance"],
                 reviews: [
                     {
-                        author: "박가족",
+                        author: "Park Family",
                         photo: "https://randomuser.me/api/portraits/women/2.jpg",
                         rating: 5,
-                        comment: "영어로 진료가 가능하고 친절한 의료진들이 많아서 안심하고 진료받을 수 있었습니다."
+                        comment: "Excellent medical staff who can communicate in English, providing reassuring care."
                     }
                 ]
             },
             {
-                name: "키즈 프랜들리 리조트",
+                name: "Kids Friendly Resort",
                 category: "accommodation",
                 position: [-8.7167, 115.1667],
-                description: "키즈풀, 키즈클럽이 있는 가족 친화적 리조트",
+                description: "Family-friendly resort with kids pool and kids club",
                 image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
-                facilities: ["키즈풀", "키즈클럽", "유아용침대", "놀이터", "키즈식당"],
+                facilities: ["Kids Pool", "Kids Club", "Baby Cot", "Playground", "Kids Restaurant"],
                 reviews: [
                     {
-                        author: "최가족",
+                        author: "Choi Family",
                         photo: "https://randomuser.me/api/portraits/men/2.jpg",
                         rating: 5,
-                        comment: "아이들을 위한 시설이 잘 갖춰져 있어서 편안한 휴가를 보낼 수 있었습니다."
+                        comment: "Well-equipped facilities for children made our vacation very comfortable."
                     }
                 ]
             }
@@ -1739,15 +1995,15 @@
             const postsContainer = document.querySelector('.posts-container');
             const samplePosts = [
                 {
-                    author: "김가족",
+                    author: "Kim Family",
                     photo: "https://randomuser.me/api/portraits/women/1.jpg",
-                    content: "발리 국제학교에 다니는 아이들의 학교 생활이 너무 즐겁다고 합니다. 다양한 국적의 친구들과 함께 공부하고 있어서 좋습니다.",
+                    content: "Our children are really enjoying their life at the international school in Bali. They love studying with friends from various nationalities.",
                     timestamp: "2024-03-15 14:30"
                 },
                 {
-                    author: "이가족",
+                    author: "Lee Family",
                     photo: "https://randomuser.me/api/portraits/men/1.jpg",
-                    content: "우붓 원숭이 숲에서 가족과 함께 즐거운 시간을 보냈습니다. 원숭이들이 너무 귀여웠어요!",
+                    content: "Had a wonderful time with family at the Ubud Monkey Forest. The monkeys were so cute!",
                     timestamp: "2024-03-14 16:45"
                 }
             ];
@@ -1791,6 +2047,47 @@
                 document.getElementById(`${boardType}-board`).style.display = 'block';
             });
         });
+
+        // 필터 옵션 다국어 처리
+        const filterOptions = {
+            ages: {
+                '': { en: 'All Ages', ko: '전체 연령' },
+                '0-2': { en: '0-2 years', ko: '0-2세' },
+                '3-5': { en: '3-5 years', ko: '3-5세' },
+                '6-12': { en: '6-12 years', ko: '6-12세' },
+                '13-18': { en: '13-18 years', ko: '13-18세' }
+            },
+            types: {
+                '': { en: 'All Types', ko: '전체 유형' },
+                'education': { en: 'Education', ko: '교육' },
+                'activities': { en: 'Activities', ko: '액티비티' },
+                'healthcare': { en: 'Healthcare', ko: '의료' },
+                'accommodation': { en: 'Accommodation', ko: '숙박' }
+            }
+        };
+
+        function updateFilterOptions() {
+            const ageFilter = document.getElementById('ageFilter');
+            const typeFilter = document.getElementById('typeFilter');
+
+            // 나이 필터 업데이트
+            Array.from(ageFilter.options).forEach((option, index) => {
+                const value = option.value;
+                option.textContent = filterOptions.ages[value][currentLang];
+            });
+
+            // 유형 필터 업데이트
+            Array.from(typeFilter.options).forEach((option, index) => {
+                const value = option.value;
+                option.textContent = filterOptions.types[value][currentLang];
+            });
+        }
+
+        // 초기 필터 옵션 설정
+        document.addEventListener('DOMContentLoaded', () => {
+            updateFilterOptions();
+            // ... existing DOMContentLoaded code ...
+        });
     </script>
 
     <footer style="background-color: #FFF5F0; padding: 2rem 0; text-align: center; margin-top: 4rem;">
@@ -1810,4 +2107,5 @@
         </div>
     </footer>
 </body>
+</html> 
 </html> 
