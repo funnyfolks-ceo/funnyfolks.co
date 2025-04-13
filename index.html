@@ -1,186 +1,1668 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Funnyfolks Login</title>
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>발리 가족 여행 커뮤니티</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
+        /* 기존 스타일 유지하면서 색상만 변경 */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #FFF5F0;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Noto Sans KR', sans-serif;
         }
-
-        body {
-            background-color: #fff5f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .login-box {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(255, 107, 53, 0.1);
-            width: 100%;
-            max-width: 400px;
+        .header {
+            background: #FF6B35;
+            color: white;
+            padding: 1.5rem 0;
             text-align: center;
+            position: relative;
         }
-
-        h2 {
-            color: #333;
-            margin-bottom: 2rem;
+        .header h1 {
             font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
-
-        .google-login-btn {
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        .login-section {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            width: 100%;
-            padding: 1rem;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            color: #333;
-            font-weight: 500;
+            gap: 1rem;
+        }
+        .login-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            font-size: 0.9rem;
         }
-
-        .google-login-btn:hover {
-            background: #f8f9fa;
-            border-color: #FF6B35;
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
         }
-
-        .google-login-btn img {
-            width: 18px;
-            height: 18px;
+        .login-btn img {
+            width: 20px;
+            height: 20px;
         }
-
-        .user-info {
-            display: none;
-            text-align: center;
-            margin-top: 2rem;
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
         }
-
-        .user-info img {
-            width: 60px;
-            height: 60px;
+        .user-profile img {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
+        }
+        .social-login-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 0.5rem;
+        }
+        .social-login-options.show {
+            display: block;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+        .social-btn:hover {
+            background: #f0f0f0;
+        }
+        .social-btn img {
+            width: 20px;
+            height: 20px;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1537996194471-e657df975ab4');
+            background-size: cover;
+            background-position: center;
+            padding: 8rem 0;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .hero-section h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.5px;
+        }
+        .hero-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            opacity: 0.95;
+            color: white;
+            font-weight: 300;
+        }
+        .explore-btn {
+            background: #FF6B35;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+        .explore-btn:hover {
+            background: #ff8557;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .category-btn i {
+            font-size: 1.2rem;
+        }
+        .category-btn:hover, .category-btn.active {
+            background: #FF6B35;
+            color: white;
+            transform: translateY(-2px);
+        }
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .location-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .location-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
             margin-bottom: 1rem;
         }
-
-        .user-info h3 {
+        .location-card h3 {
             color: #333;
             margin-bottom: 0.5rem;
         }
-
-        .user-info p {
+        .location-card p {
             color: #666;
             margin-bottom: 1rem;
         }
-
-        .logout-btn {
-            background: #f8f9fa;
-            color: #FF6B35;
-            border: 1px solid #FF6B35;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s;
+        .facility-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
         }
-
-        .logout-btn:hover {
+        .facility-tag {
+            background: #FFE5D9;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #FF6B35;
+        }
+        .review-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        .review-item {
+            margin-bottom: 1rem;
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .review-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 0.8rem;
+        }
+        .review-info h4 {
+            margin: 0;
+            font-size: 1rem;
+            color: #333;
+        }
+        .review-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .review-stars {
+            color: #ffc107;
+            margin: 0.5rem 0;
+        }
+        .review-content {
+            color: #444;
+            line-height: 1.5;
+        }
+        .community-section {
+            background: white;
+            padding: 4rem 0;
+            margin-top: 4rem;
+        }
+        .community-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+        .community-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .influencer-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .influencer-card {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .influencer-card:last-child {
+            border-bottom: none;
+        }
+        .influencer-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .influencer-info {
+            flex: 1;
+        }
+        .influencer-name {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+        .influencer-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .influencer-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .sponsor-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .sponsor-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .sponsor-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        .sponsor-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 53, 0.1);
+        }
+        .sponsor-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        .sponsor-info {
+            flex: 1;
+        }
+        .sponsor-name {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+        .sponsor-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .social-link {
+            color: #FF6B35;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .social-link:hover {
+            text-decoration: underline;
+        }
+        .post-form {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .post-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            resize: vertical;
+            min-height: 100px;
+        }
+        .post-form button {
             background: #FF6B35;
             color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .post-form button:hover {
+            background: #ff8557;
+        }
+        .posts-container {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .post-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .post-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+        .post-info h4 {
+            margin: 0;
+            color: #333;
+        }
+        .post-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .post-content {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .post-actions {
+            display: flex;
+            gap: 1rem;
+            color: #666;
+        }
+        .post-actions i {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .post-actions i:hover {
+            color: #FF6B35;
+        }
+        .hotplace-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(255, 107, 53, 0.1);
+        }
+        .hotplace-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        .hotplace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .hotplace-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        .hotplace-card:hover {
+            transform: translateY(-5px);
+        }
+        .hotplace-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        .hotplace-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .hotplace-card:hover .hotplace-image img {
+            transform: scale(1.05);
+        }
+        .hotplace-content {
+            padding: 1.5rem;
+        }
+        .hotplace-content h3 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+        .hotplace-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .hotplace-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .hotplace-tags span {
+            background: #FFE5D9;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: #FF6B35;
+        }
+        .detail-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #FF6B35;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s ease;
+        }
+        .detail-button:hover {
+            background: #ff8557;
+            color: white;
+        }
+        .filter-section {
+            padding: 2rem 0;
+            background: white;
+        }
+        .filter-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        .filter-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .filter-select {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #333;
+            background: white;
+        }
+        .destinations-section {
+            padding: 4rem 0;
+            background: white;
+        }
+        .destinations-section h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .destination-card {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        .destination-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+            z-index: 1;
+        }
+        .destination-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .destination-card:hover img {
+            transform: scale(1.05);
+        }
+        .destination-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            color: white;
+            z-index: 2;
+        }
+        .destination-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        .destination-card p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+        }
+        .destination-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .stat i {
+            font-size: 1rem;
+        }
+        .board-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            box-shadow: 0 2px 10px rgba(255, 107, 53, 0.1);
+        }
+        .board-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .board-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .board-content h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .search-input {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #FF6B35;
+        }
+        .search-btn {
+            padding: 0.5rem 1rem;
+            background: #FF6B35;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .search-btn:hover {
+            background: #ff8557;
+        }
+        .write-btn {
+            padding: 0.5rem 1.2rem;
+            background: #FF6B35;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .write-btn:hover {
+            background: #ff8557;
+            transform: translateY(-2px);
+        }
+        .board-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .board-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .board-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 53, 0.1);
+            border-color: #FFE5D9;
+        }
+        .board-profile {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            object-fit: cover;
+        }
+        .board-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .board-title {
+            font-size: 1.1rem;
+            color: #333;
+            font-weight: 500;
+        }
+        .board-meta {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .board-stats {
+            display: flex;
+            gap: 1rem;
+            color: #666;
+            align-items: center;
+        }
+        .board-stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .board-price {
+            color: #FF6B35;
+            font-weight: bold;
+            padding: 0.4rem 1rem;
+            background: #FFE5D9;
+            border-radius: 20px;
+        }
+        .board-date {
+            color: #FF6B35;
+            font-weight: 500;
+            padding: 0.4rem 1rem;
+            background: #FFE5D9;
+            border-radius: 20px;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+            gap: 0.5rem;
+        }
+        .pagination button {
+            border: none;
+            background: none;
+            color: #666;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .pagination button:hover {
+            background: #f0f0f0;
+        }
+        .pagination button.active {
+            background: #FF6B35;
+            color: white;
+        }
+        .pagination button:disabled {
+            color: #ccc;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <h2>FunnyFolks</h2>
-        
-        <button class="google-login-btn" onclick="googleLogin()">
+    <div class="login-section" style="position: fixed; top: 1rem; right: 1rem; z-index: 1000;">
+        <div id="loginButton" class="login-btn">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-            구글 계정으로 로그인
-        </button>
-
-        <div class="user-info" id="userInfo">
-            <img id="userPhoto" src="" alt="프로필 사진">
-            <h3 id="userName"></h3>
-            <p id="userEmail"></p>
-            <button class="logout-btn" onclick="logout()">로그아웃</button>
+            <span>로그인</span>
+        </div>
+        <div id="userProfile" class="user-profile" style="display: none;">
+            <img id="userPhoto" src="" alt="프로필">
+            <span id="userName"></span>
+        </div>
+        <div id="socialLoginOptions" class="social-login-options">
+            <button class="social-btn" id="googleLogin">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+                <span>Google로 로그인</span>
+            </button>
+            <button class="social-btn" id="facebookLogin" disabled>
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/facebook.svg" alt="Facebook">
+                <span>Facebook으로 로그인</span>
+            </button>
+            <button class="social-btn" id="kakaoLogin" disabled>
+                <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="Kakao">
+                <span>카카오로 로그인</span>
+            </button>
         </div>
     </div>
 
+    <div class="hero-section">
+        <h1>Where Family Adventures Find Their Place 🧭</h1>
+        <p>Discover trusted tips, local gems, and real community stories — made for traveling families, by traveling families.</p>
+        <a href="#" class="explore-btn">Explore Now</a>
+    </div>
+
+    <div class="container">
+        <div class="destinations-section">
+            <h2>Popular Destinations</h2>
+            <div class="destinations-grid">
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1558005530-a7958896ec60" alt="Bali">
+                    <div class="destination-content">
+                        <h3>Bali</h3>
+                        <p>Explore kindergartens, daycares and family communities in paradise.</p>
+                        <div class="destination-stats">
+                            <div class="stat">
+                                <i class="fas fa-user-friends"></i>
+                                <span>2.5k Families</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-school"></i>
+                                <span>45 Schools</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.8/5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1538669715315-155098f0fb1d" alt="Seoul">
+                    <div class="destination-content">
+                        <h3>Seoul</h3>
+                        <p>Discover expat-friendly educational options and Korean family life tips.</p>
+                        <div class="destination-stats">
+                            <div class="stat">
+                                <i class="fas fa-user-friends"></i>
+                                <span>5k Families</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-school"></i>
+                                <span>120 Schools</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.9/5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="https://images.unsplash.com/photo-1598935898639-81586f7d2129" alt="Chiang Mai">
+                    <div class="destination-content">
+                        <h3>Chiang Mai</h3>
+                        <p>A haven for nomad families, with nature-based schools and creative hubs.</p>
+                        <div class="destination-stats">
+                            <div class="stat">
+                                <i class="fas fa-user-friends"></i>
+                                <span>1.8k Families</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-school"></i>
+                                <span>30 Schools</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.7/5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h2>Filter by Children Age & Facility Type</h2>
+            <div class="filter-container">
+                <select class="filter-select">
+                    <option value="">All Ages</option>
+                    <option value="0-2">0-2 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="6-12">6-12 years</option>
+                    <option value="13-18">13-18 years</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">All Types</option>
+                    <option value="education">Education</option>
+                    <option value="activities">Activities</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="accommodation">Accommodation</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="category-buttons">
+            <button class="category-btn active" data-category="all">
+                <i class="fas fa-globe"></i> 전체보기
+            </button>
+            <button class="category-btn" data-category="kids-restaurant">
+                <i class="fas fa-utensils"></i> 키즈식당
+            </button>
+            <button class="category-btn" data-category="kids-cafe">
+                <i class="fas fa-coffee"></i> 키즈카페
+            </button>
+            <button class="category-btn" data-category="playground">
+                <i class="fas fa-child"></i> 놀이터/공원
+            </button>
+            <button class="category-btn" data-category="hospital">
+                <i class="fas fa-hospital"></i> 소아과/병원
+            </button>
+            <button class="category-btn" data-category="pharmacy">
+                <i class="fas fa-prescription-bottle-medical"></i> 약국
+            </button>
+            <button class="category-btn" data-category="education">
+                <i class="fas fa-school"></i> 교육시설
+            </button>
+            <button class="category-btn" data-category="accommodation">
+                <i class="fas fa-bed"></i> 키즈호텔
+            </button>
+            <button class="category-btn" data-category="shopping">
+                <i class="fas fa-shopping-cart"></i> 유아용품점
+            </button>
+        </div>
+
+        <div id="map"></div>
+        <div id="location-list"></div>
+
+        <div class="board-section">
+            <h2 style="text-align: center; margin-bottom: 2rem;">커뮤니티 게시판</h2>
+            <div class="board-container">
+                <!-- 자유게시판 -->
+                <div class="board-content">
+                    <h3>자유게시판 <a href="#" class="write-btn">글쓰기</a></h3>
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="키워드로 검색하기">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                            검색
+                        </button>
+                    </div>
+                    <div class="board-list">
+                        <div class="board-item">
+                            <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="프로필" class="board-profile">
+                            <div class="board-info">
+                                <span class="board-title">발리 워터밤 후기 공유해요!</span>
+                                <span class="board-meta">김여행러 | 2024.03.15 | 조회 128</span>
+                            </div>
+                            <div class="board-stats">
+                                <span><i class="fas fa-heart"></i> 24</span>
+                                <span><i class="fas fa-comment"></i> 12</span>
+                            </div>
+                        </div>
+                        <div class="board-item">
+                            <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="프로필" class="board-profile">
+                            <div class="board-info">
+                                <span class="board-title">우붓에서 아이와 함께하는 문화체험 추천</span>
+                                <span class="board-meta">박엄마 | 2024.03.14 | 조회 156</span>
+                            </div>
+                            <div class="board-stats">
+                                <span><i class="fas fa-heart"></i> 31</span>
+                                <span><i class="fas fa-comment"></i> 15</span>
+                            </div>
+                        </div>
+                        <div class="board-item">
+                            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="프로필" class="board-profile">
+                            <div class="board-info">
+                                <span class="board-title">발리 현지 유치원 체험기</span>
+                                <span class="board-meta">이세계 | 2024.03.13 | 조회 203</span>
+                            </div>
+                            <div class="board-stats">
+                                <span><i class="fas fa-heart"></i> 45</span>
+                                <span><i class="fas fa-comment"></i> 28</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pagination">
+                        <button disabled><i class="fas fa-chevron-left"></i></button>
+                        <button class="active">1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- 물품 판매/나눔 게시판 -->
+                <div class="board-content">
+                    <h3>물품 판매/나눔 <a href="#" class="write-btn">글쓰기</a></h3>
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="물품명, 가격 등으로 검색">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                            검색
+                        </button>
+                    </div>
+                    <div class="board-list">
+                        <div class="board-item">
+                            <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="프로필" class="board-profile">
+                            <div class="board-info">
+                                <span class="board-title">[판매] 유아용 비치텐트 판매합니다</span>
+                                <span class="board-meta">해변러버 | 2024.03.15 | 조회 89</span>
+                            </div>
+                            <div class="board-price">150,000원</div>
+                        </div>
+                        <div class="board-item">
+                            <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="프로필" class="board-profile">
+                            <div class="board-info">
+                                <span class="board-title">[나눔] 유아 수영용품 나눔해요</span>
+                                <span class="board-meta">물놀이맘 | 2024.03.14 | 조회 134</span>
+                            </div>
+                            <div class="board-price">나눔</div>
+                        </div>
+                        <div class="board-item">
+                            <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="프로필" class="board-profile">
+                            <div class="board-info">
+                                <span class="board-title">[판매] 아기 캐리어 거의 새것</span>
+                                <span class="board-meta">육아전문 | 2024.03.13 | 조회 167</span>
+                            </div>
+                            <div class="board-price">80,000원</div>
+                        </div>
+                    </div>
+                    <div class="pagination">
+                        <button disabled><i class="fas fa-chevron-left"></i></button>
+                        <button class="active">1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- 이벤트 게시판 -->
+                <div class="board-content">
+                    <h3>이벤트 <a href="#" class="write-btn">글쓰기</a></h3>
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="이벤트명, 장소 등으로 검색">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                            검색
+                        </button>
+                    </div>
+                    <div class="board-list">
+                        <div class="board-item">
+                            <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="프로필" class="board-profile">
+                            <div class="board-info">
+                                <span class="board-title">[진행중] 발리 키즈카페 무료 이용권 이벤트</span>
+                                <span class="board-meta">이벤트킹 | 2024.03.15 | 조회 423</span>
+                            </div>
+                            <div class="board-date">~03/31</div>
+                        </div>
+                        <div class="board-item">
+                            <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="프로필" class="board-profile">
+                            <div class="board-info">
+                                <span class="board-title">[모집] 발리 가족사진 무료 촬영 이벤트</span>
+                                <span class="board-meta">포토그래퍼 | 2024.03.14 | 조회 356</span>
+                            </div>
+                            <div class="board-date">~03/25</div>
+                        </div>
+                        <div class="board-item">
+                            <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="프로필" class="board-profile">
+                            <div class="board-info">
+                                <span class="board-title">[진행중] 우붓 문화체험 50% 할인</span>
+                                <span class="board-meta">문화나눔 | 2024.03.13 | 조회 289</span>
+                            </div>
+                            <div class="board-date">~03/20</div>
+                        </div>
+                    </div>
+                    <div class="pagination">
+                        <button disabled><i class="fas fa-chevron-left"></i></button>
+                        <button class="active">1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hotplace-section">
+            <h2>인플루언서들이 추천하는 발리 핫플레이스/이벤트 ✨</h2>
+            <div class="hotplace-grid">
+                <!-- 우붓 원숭이 숲 -->
+                <div class="hotplace-card">
+                    <div class="hotplace-image">
+                        <img src="https://images.unsplash.com/photo-1578469550956-0e16b69c6a3d" alt="우붓 원숭이 숲">
+                    </div>
+                    <div class="hotplace-content">
+                        <h3>우붓 원숭이 숲</h3>
+                        <p>자연과 교감할 수 있는 발리의 대표 명소</p>
+                        <div class="hotplace-tags">
+                            <span>#자연</span>
+                            <span>#가족여행</span>
+                            <span>#우붓</span>
+                        </div>
+                        <div class="influencer-reviews">
+                            <div class="influencer-review" style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Sarah Kim" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    <div>
+                                        <div style="font-weight: 500;">Sarah Kim</div>
+                                        <div style="font-size: 0.8rem; color: #666;">@sarahkim_family</div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"아이들의 자연 학습장으로 최고예요! 원숭이들과 안전하게 교감할 수 있고, 열대우림 속에서 특별한 경험을 할 수 있어요. 꼭 바나나 🍌 챙겨가세요!"</p>
+                            </div>
+                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                    <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Tom Wilson" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    <div>
+                                        <div style="font-weight: 500;">Tom Wilson</div>
+                                        <div style="font-size: 0.8rem; color: #666;">@tomwilson_travels</div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"아침 일찍 방문하면 더욱 활동적인 원숭이들을 만날 수 있어요. 아이들이 자연 속에서 동물들과 교감하며 배우는 최고의 장소입니다! 🐒"</p>
+                            </div>
+                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                    <img src="https://randomuser.me/api/portraits/women/62.jpg" alt="Maya Chen" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    <div>
+                                        <div style="font-weight: 500;">Maya Chen</div>
+                                        <div style="font-size: 0.8rem; color: #666;">@mayaexplores</div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"숲 속 산책로가 잘 정비되어 있어 유모차도 이용 가능해요. 가이드와 함께하면 더 안전하고 재미있는 체험이 가능합니다. 🌿"</p>
+                            </div>
+                        </div>
+                        <a href="#" class="detail-button">자세히 보기</a>
+                    </div>
+                </div>
+
+                <!-- 누사두아 해변 -->
+                <div class="hotplace-card">
+                    <div class="hotplace-image">
+                        <img src="https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8" alt="누사두아 해변">
+                    </div>
+                    <div class="hotplace-content">
+                        <h3>누사두아 해변</h3>
+                        <p>가족과 함께 즐기기 좋은 아름다운 해변</p>
+                        <div class="hotplace-tags">
+                            <span>#해변</span>
+                            <span>#가족여행</span>
+                            <span>#누사두아</span>
+                        </div>
+                        <div class="influencer-reviews">
+                            <div class="influencer-review" style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David Park" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    <div>
+                                        <div style="font-weight: 500;">David Park</div>
+                                        <div style="font-size: 0.8rem; color: #666;">@davidinbali</div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"발리에서 가장 안전한 해변 중 하나에요. 파도가 잔잔해서 아이들 물놀이하기 좋고, 선베드와 파라솔이 잘 갖춰져 있어요. 일몰 시간대에 방문하면 환상적인 뷰를 볼 수 있답니다! 🌅"</p>
+                            </div>
+                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                    <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Lisa Johnson" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    <div>
+                                        <div style="font-weight: 500;">Lisa Johnson</div>
+                                        <div style="font-size: 0.8rem; color: #666;">@lisa_beachlife</div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"해변 주변에 키즈 프로그램을 운영하는 비치클럽이 있어요. 아이들이 수영도 배우고 모래성도 만들며 즐거운 시간을 보낼 수 있습니다! 🏖️"</p>
+                            </div>
+                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                    <img src="https://randomuser.me/api/portraits/men/92.jpg" alt="Alex Brown" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    <div>
+                                        <div style="font-weight: 500;">Alex Brown</div>
+                                        <div style="font-size: 0.8rem; color: #666;">@alexbrown_bali</div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"주변에 가족 친화적인 레스토랑이 많아서 편리해요. 특히 아침에 방문하면 한적하게 즐길 수 있답니다. 선크림은 필수! ⛱️"</p>
+                            </div>
+                        </div>
+                        <a href="#" class="detail-button">자세히 보기</a>
+                    </div>
+                </div>
+
+                <!-- 와루구 레스토랑 -->
+                <div class="hotplace-card">
+                    <div class="hotplace-image">
+                        <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7" alt="와루구 레스토랑">
+                    </div>
+                    <div class="hotplace-content">
+                        <h3>와루구 레스토랑</h3>
+                        <p>지역 음식을 맛볼 수 있는 인기 맛집</p>
+                        <div class="hotplace-tags">
+                            <span>#맛집</span>
+                            <span>#로컬푸드</span>
+                            <span>#가족식당</span>
+                        </div>
+                        <div class="influencer-reviews">
+                            <div class="influencer-review" style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                    <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Emma Lee" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    <div>
+                                        <div style="font-weight: 500;">Emma Lee</div>
+                                        <div style="font-size: 0.8rem; color: #666;">@emma_kidsbali</div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"아이들도 먹기 좋은 마일드한 발리 음식이 준비되어 있어요. 키즈메뉴도 있고, 청결도도 최고! 특히 나시고랭은 꼭 드셔보세요 🍚 매주 일요일 저녁에는 전통 공연도 볼 수 있답니다."</p>
+                            </div>
+                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
+                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                    <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Ryan Kim" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    <div>
+                                        <div style="font-weight: 500;">Ryan Kim</div>
+                                        <div style="font-size: 0.8rem; color: #666;">@ryan_foodie</div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"키즈존이 따로 마련되어 있어서 아이들이 식사하면서 놀 수 있어요. 유기농 재료를 사용하는 것도 큰 장점! 🥗"</p>
+                            </div>
+                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                                    <img src="https://randomuser.me/api/portraits/women/89.jpg" alt="Sophie Wang" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    <div>
+                                        <div style="font-weight: 500;">Sophie Wang</div>
+                                        <div style="font-size: 0.8rem; color: #666;">@sophieeats</div>
+                                    </div>
+                                </div>
+                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"영어/한국어 메뉴판이 있어서 주문이 편해요. 스태프들도 아이들에게 친절하고, 알러지 있는 아이들을 위한 특별 메뉴도 준비되어 있답니다! 👨‍👩‍👧‍👦"</p>
+                            </div>
+                        </div>
+                        <a href="#" class="detail-button">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 퍼니폭스 추천 광고 섹션 -->
+        <div class="hotplace-section" style="background-color: #FFF5F0; margin: 4rem 0;">
+            <h2 style="color: #FF6B35;">퍼니폭스가 추천합니다 <span style="font-size: 0.8em; color: #666;">(광고)</span></h2>
+            <div class="hotplace-grid">
+                <!-- 키즈메디 병원 -->
+                <div class="hotplace-card">
+                    <div class="hotplace-image">
+                        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d" alt="키즈메디 병원">
+                    </div>
+                    <div class="hotplace-content">
+                        <h3>키즈메디 병원</h3>
+                        <p>한국인 소아과 전문의 상주, 24시간 응급진료</p>
+                        <div class="hotplace-tags">
+                            <span>#한국의료진</span>
+                            <span>#영어가능</span>
+                            <span>#소아과전문</span>
+                        </div>
+                        <div style="margin: 10px 0; font-size: 0.9em; color: #666;">
+                            <i class="fas fa-map-marker-alt"></i> 누사두아 메인로드 123
+                            <br>
+                            <i class="fas fa-phone"></i> +62-123-4567
+                        </div>
+                        <a href="#" class="detail-button">예약하기</a>
+                    </div>
+                </div>
+
+                <!-- 리틀포레스트 키즈카페 -->
+                <div class="hotplace-card">
+                    <div class="hotplace-image">
+                        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9" alt="리틀포레스트 키즈카페 - 실내 놀이터">
+                    </div>
+                    <div class="hotplace-content">
+                        <h3>리틀포레스트 키즈카페</h3>
+                        <p>친환경 놀이시설과 한국식 간식이 있는 프리미엄 키즈카페</p>
+                        <div class="hotplace-tags">
+                            <span>#친환경시설</span>
+                            <span>#한국간식</span>
+                            <span>#영유아전용</span>
+                        </div>
+                        <div style="margin: 10px 0; font-size: 0.9em; color: #666;">
+                            <i class="fas fa-map-marker-alt"></i> 꾸따 중심가 456
+                            <br>
+                            <i class="fas fa-clock"></i> 10:00 - 20:00
+                        </div>
+                        <a href="#" class="detail-button">할인쿠폰 받기</a>
+                    </div>
+                </div>
+
+                <!-- 해피키즈 마트 -->
+                <div class="hotplace-card">
+                    <div class="hotplace-image">
+                        <img src="https://images.unsplash.com/photo-1601600576337-c1d8a0d1373c" alt="해피키즈 마트">
+                    </div>
+                    <div class="hotplace-content">
+                        <h3>해피키즈 마트</h3>
+                        <p>한국 유아용품과 간식을 한곳에서, 긴급 배송 가능</p>
+                        <div class="hotplace-tags">
+                            <span>#한국제품</span>
+                            <span>#당일배송</span>
+                            <span>#유아용품</span>
+                        </div>
+                        <div style="margin: 10px 0; font-size: 0.9em; color: #666;">
+                            <i class="fas fa-map-marker-alt"></i> 스미냑 거리 789
+                            <br>
+                            <i class="fas fa-truck"></i> 2시간 이내 배송
+                        </div>
+                        <a href="#" class="detail-button">온라인 주문</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="community-section">
+            <h2>Funnyfox 파트너 인플루언서 & 후원사</h2>
+            <div class="community-grid">
+                <div class="influencer-section">
+                    <div class="influencer-card">
+                        <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Sarah Kim" class="influencer-photo">
+                        <div class="influencer-info">
+                            <h3 class="influencer-name">Sarah Kim</h3>
+                            <p class="influencer-title">가족 여행 전문 유튜버 | 구독자 50만+</p>
+                            <div class="influencer-stats">
+                                <span><i class="fab fa-youtube"></i> @sarahkim_family</span>
+                                <span><i class="fab fa-instagram"></i> 82k followers</span>
+                            </div>
+                        </div>
+                        <a href="#" class="social-link">채널 방문 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="influencer-card">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David Park" class="influencer-photo">
+                        <div class="influencer-info">
+                            <h3 class="influencer-name">David Park</h3>
+                            <p class="influencer-title">발리 현지 가이드 | 교육 컨설턴트</p>
+                            <div class="influencer-stats">
+                                <span><i class="fab fa-instagram"></i> @davidinbali</span>
+                                <span><i class="fas fa-users"></i> 120+ 가족 투어</span>
+                            </div>
+                        </div>
+                        <a href="#" class="social-link">프로필 보기 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+
+                    <div class="influencer-card">
+                        <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Emma Lee" class="influencer-photo">
+                        <div class="influencer-info">
+                            <h3 class="influencer-name">Emma Lee</h3>
+                            <p class="influencer-title">키즈 액티비티 전문가 | 발리 거주 5년</p>
+                            <div class="influencer-stats">
+                                <span><i class="fab fa-instagram"></i> @emma_kidsbali</span>
+                                <span><i class="fas fa-star"></i> 4.9/5 평점</span>
+                            </div>
+                        </div>
+                        <a href="#" class="social-link">프로그램 보기 <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="sponsor-section">
+                    <h3 class="sponsor-title">Official Partners</h3>
+                    <div class="sponsor-card">
+                        <img src="https://logo.clearbit.com/garuda-indonesia.com" alt="Garuda Indonesia" class="sponsor-logo">
+                        <div class="sponsor-info">
+                            <h4 class="sponsor-name">Garuda Indonesia</h4>
+                            <p class="sponsor-description">가족 여행객 특별 할인 제공</p>
+                        </div>
+                    </div>
+
+                    <div class="sponsor-card">
+                        <img src="https://logo.clearbit.com/ritzcarlton.com" alt="The Ritz-Carlton Bali" class="sponsor-logo">
+                        <div class="sponsor-info">
+                            <h4 class="sponsor-name">The Ritz-Carlton Bali</h4>
+                            <p class="sponsor-description">키즈 프로그램 파트너십</p>
+                        </div>
+                    </div>
+
+                    <div class="sponsor-card">
+                        <img src="https://logo.clearbit.com/klook.com" alt="Klook" class="sponsor-logo">
+                        <div class="sponsor-info">
+                            <h4 class="sponsor-name">Klook</h4>
+                            <p class="sponsor-description">가족 액티비티 독점 할인</p>
+                        </div>
+                    </div>
+
+                    <div class="sponsor-card">
+                        <img src="https://logo.clearbit.com/airasia.com" alt="AirAsia" class="sponsor-logo">
+                        <div class="sponsor-info">
+                            <h4 class="sponsor-name">AirAsia</h4>
+                            <p class="sponsor-description">특별 가족석 제공</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
+        // Firebase 설정
         const firebaseConfig = {
-            apiKey: "AIzaSyC5kddjXnOgTrl3MR9C1_fQIm5t04m0SXA",
-            authDomain: "funnyfolks-27ead.firebaseapp.com",
-            projectId: "funnyfolks-27ead",
-            storageBucket: "funnyfolks-27ead.firebasestorage.app",
-            messagingSenderId: "394427662403",
-            appId: "1:394427662403:web:f735e53d479217125894f6",
-            measurementId: "G-MN13LW2DDP"
+            apiKey: "AIzaSyDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            authDomain: "your-project.firebaseapp.com",
+            projectId: "your-project",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef1234567890"
         };
-
-        // Firebase 초기화
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
 
-        // DOM 요소
-        const userInfo = document.getElementById('userInfo');
-        const userPhoto = document.getElementById('userPhoto');
-        const userName = document.getElementById('userName');
-        const userEmail = document.getElementById('userEmail');
+        // 구글 로그인 기능
+        const provider = new firebase.auth.GoogleAuthProvider();
+        const loginButton = document.getElementById('loginButton');
+        const userProfile = document.getElementById('userProfile');
+        const socialLoginOptions = document.getElementById('socialLoginOptions');
+        const googleLogin = document.getElementById('googleLogin');
 
-        function googleLogin() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
+        // 로그인 버튼 클릭 이벤트
+        loginButton.addEventListener('click', () => {
+            if (firebase.auth().currentUser) {
+                firebase.auth().signOut();
+            } else {
+                socialLoginOptions.classList.add('show');
+            }
+        });
+
+        // 소셜 로그인 옵션 클릭 이벤트
+        googleLogin.addEventListener('click', () => {
+            firebase.auth().signInWithPopup(provider)
                 .then((result) => {
-                    alert(`환영합니다, ${result.user.displayName}님!`);
+                    const user = result.user;
+                    updateUserProfile(user);
+                    socialLoginOptions.classList.remove('show');
                 })
                 .catch((error) => {
-                    console.error("로그인 실패:", error);
-                    alert("로그인 중 오류가 발생했습니다.");
+                    console.error('로그인 에러:', error);
                 });
-        }
+        });
 
-        function logout() {
-            auth.signOut()
-                .then(() => {
-                    alert('로그아웃 되었습니다.');
-                })
-                .catch((error) => {
-                    console.error("로그아웃 실패:", error);
-                });
+        // 사용자 프로필 업데이트 함수
+        function updateUserProfile(user) {
+            if (user) {
+                userProfile.style.display = 'flex';
+                document.getElementById('userPhoto').src = user.photoURL;
+                document.getElementById('userName').textContent = user.displayName;
+                loginButton.querySelector('span').textContent = '로그아웃';
+            } else {
+                userProfile.style.display = 'none';
+                loginButton.querySelector('span').textContent = '로그인';
+            }
         }
 
         // 인증 상태 변경 감지
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                // 로그인 상태
-                document.querySelector('.google-login-btn').style.display = 'none';
-                userInfo.style.display = 'block';
-                userPhoto.src = user.photoURL || 'https://via.placeholder.com/60';
-                userName.textContent = user.displayName || '사용자';
-                userEmail.textContent = user.email;
-            } else {
-                // 로그아웃 상태
-                document.querySelector('.google-login-btn').style.display = 'flex';
-                userInfo.style.display = 'none';
+        firebase.auth().onAuthStateChanged((user) => {
+            updateUserProfile(user);
+        });
+
+        // 소셜 로그인 옵션 외부 클릭 시 닫기
+        document.addEventListener('click', (e) => {
+            if (!loginButton.contains(e.target) && !socialLoginOptions.contains(e.target)) {
+                socialLoginOptions.classList.remove('show');
             }
         });
+
+        // 지도 초기화
+        const map = L.map('map').setView([-8.3405, 115.0920], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 샘플 데이터
+        const locations = [
+            {
+                name: "발리 키즈 레스토랑",
+                category: "kids-restaurant",
+                position: [-8.3405, 115.0920],
+                description: "아이들을 위한 특별 메뉴와 놀이공간이 있는 가족 친화적 레스토랑",
+                image: "https://images.unsplash.com/photo-1544025162-d76694265947",
+                facilities: ["키즈메뉴", "유아용 의자", "놀이공간", "수유실", "유아용 식기"],
+                reviews: [
+                    {
+                        author: "김가족",
+                        photo: "https://randomuser.me/api/portraits/women/1.jpg",
+                        rating: 5,
+                        comment: "아이들이 좋아하는 메뉴가 많고, 놀이공간도 있어서 편하게 식사할 수 있었어요."
+                    }
+                ]
+            },
+            {
+                name: "우붓 키즈카페",
+                category: "kids-cafe",
+                position: [-8.5183, 115.2585],
+                description: "실내 놀이터와 교육 프로그램을 제공하는 프리미엄 키즈카페",
+                image: "https://images.unsplash.com/photo-1576334761529-0c2f3d3359ea",
+                facilities: ["실내놀이터", "교육프로그램", "수유실", "카페", "유아용화장실"],
+                reviews: [
+                    {
+                        author: "이가족",
+                        photo: "https://randomuser.me/api/portraits/men/1.jpg",
+                        rating: 5,
+                        comment: "깨끗하고 안전한 시설에서 아이들이 즐겁게 놀 수 있었습니다."
+                    }
+                ]
+            },
+            {
+                name: "발리 국제병원",
+                category: "hospital",
+                position: [-8.5833, 115.2000],
+                description: "24시간 소아과 진료가 가능한 국제병원",
+                image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d",
+                facilities: ["소아과", "응급실", "영어진료", "보험처리", "구급차"],
+                reviews: [
+                    {
+                        author: "박가족",
+                        photo: "https://randomuser.me/api/portraits/women/2.jpg",
+                        rating: 5,
+                        comment: "영어로 진료가 가능하고 친절한 의료진들이 많아서 안심하고 진료받을 수 있었습니다."
+                    }
+                ]
+            },
+            {
+                name: "키즈 프랜들리 리조트",
+                category: "accommodation",
+                position: [-8.7167, 115.1667],
+                description: "키즈풀, 키즈클럽이 있는 가족 친화적 리조트",
+                image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
+                facilities: ["키즈풀", "키즈클럽", "유아용침대", "놀이터", "키즈식당"],
+                reviews: [
+                    {
+                        author: "최가족",
+                        photo: "https://randomuser.me/api/portraits/men/2.jpg",
+                        rating: 5,
+                        comment: "아이들을 위한 시설이 잘 갖춰져 있어서 편안한 휴가를 보낼 수 있었습니다."
+                    }
+                ]
+            }
+        ];
+
+        // 마커 추가
+        const markers = {};
+        locations.forEach(location => {
+            const marker = L.marker(location.position).addTo(map);
+            marker.bindPopup(`
+                <h3>${location.name}</h3>
+                <img src="${location.image}" style="width:100%;height:150px;object-fit:cover;margin:10px 0;">
+                <p>${location.description}</p>
+                <div class="facility-tags">
+                    ${location.facilities.map(facility => `<span class="facility-tag">${facility}</span>`).join('')}
+                </div>
+                <div class="review-section">
+                    <h4>리뷰</h4>
+                    ${location.reviews.map(review => `
+                        <div class="review-item">
+                            <div class="review-header">
+                                <img src="${review.photo}" alt="${review.author}">
+                                <div class="review-info">
+                                    <h4>${review.author}</h4>
+                                    <p>${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</p>
+                                </div>
+                            </div>
+                            <p class="review-content">${review.comment}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `);
+            markers[location.name] = marker;
+        });
+
+        // 카테고리 필터링
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const category = button.dataset.category;
+                locations.forEach(location => {
+                    const marker = markers[location.name];
+                    if (category === 'all' || location.category === category) {
+                        marker.addTo(map);
+                    } else {
+                        marker.remove();
+                    }
+                });
+            });
+        });
+
+        // 게시물 로드 함수
+        function loadPosts() {
+            const postsContainer = document.querySelector('.posts-container');
+            const samplePosts = [
+                {
+                    author: "김가족",
+                    photo: "https://randomuser.me/api/portraits/women/1.jpg",
+                    content: "발리 국제학교에 다니는 아이들의 학교 생활이 너무 즐겁다고 합니다. 다양한 국적의 친구들과 함께 공부하고 있어서 좋습니다.",
+                    timestamp: "2024-03-15 14:30"
+                },
+                {
+                    author: "이가족",
+                    photo: "https://randomuser.me/api/portraits/men/1.jpg",
+                    content: "우붓 원숭이 숲에서 가족과 함께 즐거운 시간을 보냈습니다. 원숭이들이 너무 귀여웠어요!",
+                    timestamp: "2024-03-14 16:45"
+                }
+            ];
+
+            postsContainer.innerHTML = samplePosts.map(post => `
+                <div class="post-card">
+                    <div class="post-header">
+                        <img src="${post.photo}" alt="${post.author}">
+                        <div class="post-info">
+                            <h4>${post.author}</h4>
+                            <p>${post.timestamp}</p>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        ${post.content}
+                    </div>
+                    <div class="post-actions">
+                        <i class="fas fa-heart"></i>
+                        <i class="fas fa-comment"></i>
+                        <i class="fas fa-share"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 페이지 로드 시 게시물 표시
+        loadPosts();
+
+        // 게시판 탭 전환 기능
+        document.querySelectorAll('.board-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 탭 활성화 상태 변경
+                document.querySelectorAll('.board-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // 게시판 내용 변경
+                const boardType = tab.dataset.board;
+                document.querySelectorAll('.board-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                document.getElementById(`${boardType}-board`).style.display = 'block';
+            });
+        });
     </script>
+
+    <footer style="background-color: #FFF5F0; padding: 2rem 0; text-align: center; margin-top: 4rem;">
+        <div class="container">
+            <h3 style="font-size: 1.5rem; color: #FF6B35; margin-bottom: 0.5rem;">FunnyFolks EDU</h3>
+            <p style="color: #666; margin-bottom: 0.5rem;">
+                Email: contact@funnyfolks.io | Instagram: @funnyfolks.global
+            </p>
+            <p style="color: #999; font-size: 0.9rem;">
+                © 2025 FunnyFolks. All rights reserved.
+            </p>
+        </div>
+    </footer>
 </body>
 </html> 
