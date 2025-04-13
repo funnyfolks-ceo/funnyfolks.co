@@ -1055,6 +1055,341 @@
         .search-result-item:last-child {
             border-bottom: none;
         }
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background-color: #fff1f0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .search-box {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+            max-width: 600px;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            height: 48px;
+        }
+        .go-button {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+            height: 48px;
+            display: flex;
+            align-items: center;
+        }
+        .go-button:hover {
+            background-color: #ff5252;
+        }
+        .filters-button {
+            padding: 12px 25px;
+            background-color: white;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            height: 48px;
+            display: flex;
+            align-items: center;
+        }
+        .filters-button:hover {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        .filter-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .filter-panel.active {
+            display: block;
+        }
+
+        .filter-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .filter-header h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .close-filter {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .filter-category {
+            margin-bottom: 2rem;
+        }
+
+        .filter-category-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .filter-button:hover {
+            background-color: #f8f8f8;
+            border-color: #ccc;
+        }
+
+        .filter-button.active {
+            background-color: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        @media (max-width: 640px) {
+            .filter-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        /* 기존 스타일 유지 */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+                padding: 0 1rem;
+            }
+            
+            .hero-section p {
+                font-size: 1.2rem;
+                padding: 0 1rem;
+                white-space: normal;
+            }
+
+            .search-container {
+                flex-direction: column;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .search-box {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .filters-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .category-buttons {
+                position: relative;
+                top: 0;
+                left: 0;
+                padding: 10px;
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap;
+                display: flex;
+                flex-wrap: nowrap;
+                gap: 8px;
+                background: rgba(255, 255, 255, 0.9);
+                z-index: 900;
+            }
+
+            .category-btn {
+                flex: 0 0 auto;
+                font-size: 12px;
+                padding: 8px 15px;
+            }
+
+            #map {
+                height: 400px;
+                margin-top: 60px;
+                z-index: 800;
+            }
+
+            .board-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .hotplace-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+
+            .community-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+
+            .filter-content {
+                width: 95%;
+                padding: 1rem;
+            }
+
+            .filter-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+
+            .filter-button {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.8rem;
+            }
+
+            .board-item {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .board-info {
+                width: 100%;
+            }
+
+            .board-stats {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .influencer-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .influencer-photo {
+                margin: 0 auto;
+            }
+
+            .sponsor-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .sponsor-logo {
+                margin: 0 auto;
+            }
+
+            .login-section {
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+
+            .language-switch {
+                top: 0.5rem;
+                left: 0.5rem;
+            }
+        }
+
+        /* 태블릿 최적화 */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .board-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hotplace-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filter-content {
+                width: 80%;
+            }
+        }
+
+        /* 지도 컨트롤 최적화 */
+        .leaflet-control-zoom {
+            margin-top: 70px !important;
+        }
+
+        /* 스크롤바 스타일링 */
+        .category-buttons::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .category-buttons::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .category-buttons::-webkit-scrollbar-thumb {
+            background: #FF6B35;
+            border-radius: 4px;
+        }
+
+        /* 모바일에서 스크롤 가능한 요소들의 스타일 */
+        .filter-content, .board-list {
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 </head>
 <body>
@@ -1101,73 +1436,18 @@
         </div>
     </div>
 
-    <!-- 필터 섹션 HTML -->
-    <div class="filters-section">
-        <div class="filters-header">
-            <span class="filters-title" data-lang="en">Filters</span>
-            <span class="filters-title" data-lang="ko">필터</span>
-            <div class="search-filter-container">
-                <input type="text" class="search-filter-input" 
-                       data-lang="en" placeholder="Search destinations..."
-                       data-lang-ko="여행지 검색...">
-                <div class="filter-dropdown">
-                    <button class="filter-dropdown-btn">
-                        <i class="fas fa-globe"></i>
-                        <span data-lang="en">Region</span>
-                        <span data-lang="ko">지역</span>
-                    </button>
-                    <div class="filter-dropdown-content" id="regionFilter">
-                        <div class="filter-group">
-                            <div class="filter-group-title" data-lang="en">Popular</div>
-                            <div class="filter-group-title" data-lang="ko">인기 지역</div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="bali">
-                                <label for="bali">Bali</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="seoul">
-                                <label for="seoul">Seoul</label>
-                            </div>
-                        </div>
-                        <div class="filter-group">
-                            <div class="filter-group-title" data-lang="en">Asia</div>
-                            <div class="filter-group-title" data-lang="ko">아시아</div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="korea">
-                                <label for="korea">Korea</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="japan">
-                                <label for="japan">Japan</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="filter-dropdown">
-                    <button class="filter-dropdown-btn">
-                        <i class="fas fa-child"></i>
-                        <span data-lang="en">Age</span>
-                        <span data-lang="ko">연령대</span>
-                    </button>
-                    <div class="filter-dropdown-content" id="ageFilter">
-                        <div class="filter-option">
-                            <input type="checkbox" id="age0-2">
-                            <label for="age0-2">0-2</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="age3-5">
-                            <label for="age3-5">3-5</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="age6-12">
-                            <label for="age6-12">6-12</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="search-container">
+        <div class="filters-button" onclick="toggleFilterPanel()">
+            <span data-lang="ko">필터</span>
+            <span data-lang="en">Filters</span>
         </div>
-        <div class="active-filters" id="activeFilters"></div>
-        <div class="search-results-preview" id="searchResults"></div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search destinations..." data-lang-placeholder-en="Search destinations..." data-lang-placeholder-ko="여행지 검색...">
+            <button class="go-button">
+                <span data-lang="ko">검색</span>
+                <span data-lang="en">GO</span>
+            </button>
+        </div>
     </div>
 
     <div class="container">
@@ -1275,39 +1555,48 @@
             <div class="category-buttons">
                 <button class="category-btn active">
                     <i class="fas fa-globe"></i>
-                    전체보기
+                    <span data-lang="ko">전체보기</span>
+                    <span data-lang="en">View All</span>
                 </button>
                 <button class="category-btn">
                     <i class="fas fa-utensils"></i>
-                    키즈식당
+                    <span data-lang="ko">키즈식당</span>
+                    <span data-lang="en">Kids Restaurant</span>
                 </button>
                 <button class="category-btn">
                     <i class="fas fa-coffee"></i>
-                    키즈카페
+                    <span data-lang="ko">키즈카페</span>
+                    <span data-lang="en">Kids Cafe</span>
                 </button>
                 <button class="category-btn">
                     <i class="fas fa-child"></i>
-                    놀이터/공원
+                    <span data-lang="ko">놀이터/공원</span>
+                    <span data-lang="en">Playground/Park</span>
                 </button>
                 <button class="category-btn">
                     <i class="fas fa-hospital"></i>
-                    소아과/병원
+                    <span data-lang="ko">소아과/병원</span>
+                    <span data-lang="en">Pediatrics/Hospital</span>
                 </button>
                 <button class="category-btn">
                     <i class="fas fa-prescription-bottle-alt"></i>
-                    약국
+                    <span data-lang="ko">약국</span>
+                    <span data-lang="en">Pharmacy</span>
                 </button>
                 <button class="category-btn">
                     <i class="fas fa-school"></i>
-                    교육시설
+                    <span data-lang="ko">교육시설</span>
+                    <span data-lang="en">Education</span>
                 </button>
                 <button class="category-btn">
                     <i class="fas fa-bed"></i>
-                    키즈호텔
+                    <span data-lang="ko">키즈호텔</span>
+                    <span data-lang="en">Kids Hotel</span>
                 </button>
                 <button class="category-btn">
                     <i class="fas fa-shopping-cart"></i>
-                    유아용품점
+                    <span data-lang="ko">유아용품점</span>
+                    <span data-lang="en">Baby Store</span>
                 </button>
             </div>
         </div>
@@ -1968,6 +2257,100 @@
         </div>
     </div>
 
+    <div class="filter-panel" id="filterPanel">
+        <div class="filter-content">
+            <div class="filter-header">
+                <h2>필터 | Filters</h2>
+                <button class="close-filter" onclick="toggleFilterPanel()">×</button>
+            </div>
+            
+            <div class="filter-category">
+                <div class="filter-category-title">
+                    🛡️ 안전 & 건강 | Safety & Health
+                </div>
+                <div class="filter-grid">
+                    <button class="filter-button">🧑‍✈️ 안전한 | Safe</button>
+                    <button class="filter-button">👩 여성 안전 | Safe for women</button>
+                    <button class="filter-button">🌬️ 깨끗한 공기 | Clean air</button>
+                    <button class="filter-button">🏥 좋은 병원 | Good hospitals</button>
+                    <button class="filter-button">🩺 좋은 의료 | Good healthcare</button>
+                    <button class="filter-button">🚰 식수 | Drinkable tap water</button>
+                    <button class="filter-button">🦟 모기 없음 | No mosquitos</button>
+                </div>
+            </div>
+
+            <div class="filter-category">
+                <div class="filter-category-title">
+                    👨‍👩‍👧‍👦 가족 친화적 | Family Friendly
+                </div>
+                <div class="filter-grid">
+                    <button class="filter-button">🧑‍🤝‍🧑 가족 | For families</button>
+                    <button class="filter-button">👶 자녀 양육 | To raise kids</button>
+                    <button class="filter-button">🌳 야외활동 | Outdoors</button>
+                    <button class="filter-button">🥾 등산 | Hiking</button>
+                    <button class="filter-button">🏖️ 해변 근처 | Near beach</button>
+                    <button class="filter-button">🌲 조용한 곳 | Silent place</button>
+                    <button class="filter-button">🙂 재미있는 | Fun</button>
+                    <button class="filter-button">🫂 모임 많음 | Many meetups</button>
+                </div>
+            </div>
+
+            <div class="filter-category">
+                <div class="filter-category-title">
+                    ⚙️ 편의성 | Convenience
+                </div>
+                <div class="filter-grid">
+                    <button class="filter-button">🛫 공항 근처 | Near airport</button>
+                    <button class="filter-button">🚀 빠른 인터넷 | Fast internet</button>
+                    <button class="filter-button">🏠 저렴한 임대료 | Cheap rent</button>
+                    <button class="filter-button">🏨 저렴한 호텔 | Cheap hotels</button>
+                    <button class="filter-button">🛍️ 대형몰 | Big malls</button>
+                    <button class="filter-button">🍏 애플스토어 | Apple Store</button>
+                    <button class="filter-button">🚘 우버 | Has Uber</button>
+                    <button class="filter-button">🧾 스트라이프 | Has Stripe</button>
+                </div>
+            </div>
+
+            <div class="filter-category">
+                <div class="filter-category-title">
+                    💰 물가 및 경제 | Cost & Affordability
+                </div>
+                <div class="filter-grid">
+                    <button class="filter-button">💵 저렴한 지역 | Affordable area</button>
+                    <button class="filter-button">🏘️ 저렴한 생활비 | Low cost of living</button>
+                    <button class="filter-button">🏠 저렴한 부동산 | Cheap real estate</button>
+                    <button class="filter-button">🛍️ 현지 물가 낮음 | Low local prices</button>
+                </div>
+            </div>
+
+            <div class="filter-category">
+                <div class="filter-category-title">
+                    🎭 환경 & 커뮤니티 | Environment & Community
+                </div>
+                <div class="filter-grid">
+                    <button class="filter-button">😊 친절한 사람들 | Friendly people</button>
+                    <button class="filter-button">✌️ 평화로운 | Peaceful</button>
+                    <button class="filter-button">🚗 안전한 교통 | Safe traffic</button>
+                    <button class="filter-button">🚦 적은 교통량 | Low traffic</button>
+                    <button class="filter-button">🌿 지속가능한 | Sustainable</button>
+                    <button class="filter-button">☂️ 비 적음 | Not rainy</button>
+                    <button class="filter-button">💧 습도 적음 | Not humid</button>
+                </div>
+            </div>
+
+            <div class="filter-category">
+                <div class="filter-category-title">
+                    🗣️ 언어 지원 | Language Support
+                </div>
+                <div class="filter-grid">
+                    <button class="filter-button">🇬🇧 영어 | English speaking</button>
+                    <button class="filter-button">🇰🇷 한국어 | Korean speaking</button>
+                    <button class="filter-button">🇪🇸 스페인어 | Spanish speaking</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -1991,6 +2374,11 @@
                 el.style.display = 'inline';
             });
             
+            // Update placeholders
+            document.querySelectorAll('input[data-lang-placeholder-en]').forEach(input => {
+                input.placeholder = input.getAttribute(`data-lang-placeholder-${newLang}`);
+            });
+            
             currentLang = newLang;
         }
 
@@ -2001,6 +2389,11 @@
             });
             document.querySelectorAll('[data-lang="en"]').forEach(el => {
                 el.style.display = 'inline';
+            });
+            
+            // Initialize placeholders
+            document.querySelectorAll('input[data-lang-placeholder-en]').forEach(input => {
+                input.placeholder = input.getAttribute('data-lang-placeholder-en');
             });
         });
 
@@ -2418,6 +2811,35 @@
                 // 여기에 실제 필터링 로직 구현
                 console.log('Selected filters:', selectedFilters);
             }
+        });
+
+        // 필터 패널 토글 함수
+        function toggleFilterPanel() {
+            const filterPanel = document.getElementById('filterPanel');
+            if (filterPanel) {
+                filterPanel.classList.toggle('active');
+            }
+        }
+
+        // 페이지 로드 시 이벤트 리스너 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            // 필터 패널 외부 클릭 시 닫기
+            const filterPanel = document.getElementById('filterPanel');
+            if (filterPanel) {
+                filterPanel.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        toggleFilterPanel();
+                    }
+                });
+            }
+
+            // 개별 필터 버튼 토글
+            document.querySelectorAll('.filter-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation(); // 이벤트 버블링 방지
+                    this.classList.toggle('active');
+                });
+            });
         });
     </script>
 
