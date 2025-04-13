@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>발리 가족 여행 커뮤니티</title>
+    <meta name="description" content="전 세계 육아/교육 가족을 위한 커뮤니티 플랫폼, Funnyfolks. 실제 경험 기반 정보와 이야기를 공유하세요.">
+    <title>Funnyfolks EDU - 글로벌 육아/교육 커뮤니티</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -789,13 +790,45 @@
             color: #ccc;
             cursor: not-allowed;
         }
+        .language-switch {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+        .language-switch:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+        [data-lang="ko"] {
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <button class="language-switch" onclick="toggleLanguage()">
+        <i class="fas fa-globe"></i>
+        <span data-lang="en">한국어</span>
+        <span data-lang="ko">English</span>
+    </button>
+
     <div class="login-section" style="position: fixed; top: 1rem; right: 1rem; z-index: 1000;">
         <div id="loginButton" class="login-btn">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-            <span>로그인</span>
+            <span data-lang="en">Login</span>
+            <span data-lang="ko">로그인</span>
         </div>
         <div id="userProfile" class="user-profile" style="display: none;">
             <img id="userPhoto" src="" alt="프로필">
@@ -818,32 +851,42 @@
     </div>
 
     <div class="hero-section">
-        <h1>Where Family Adventures Find Their Place 🧭</h1>
-        <p>Discover trusted tips, local gems, and real community stories — made for traveling families, by traveling families.</p>
-        <a href="#" class="explore-btn">Explore Now</a>
+        <h1>
+            <span data-lang="en">Where Family Adventures Begin 🧭</span>
+            <span data-lang="ko">가족 모험이 시작되는 곳 🧭</span>
+        </h1>
+        <p>
+            <span data-lang="en">Discover trusted tips, local gems, and real community stories — made for traveling families, by traveling families.</span>
+            <span data-lang="ko">여행 가족들을 위한, 여행 가족들이 만든 신뢰할 수 있는 팁과 현지 보물, 그리고 진정한 커뮤니티 스토리를 발견하세요.</span>
+        </p>
+        <a href="#" class="explore-btn">
+            <span data-lang="en">Explore Now</span>
+            <span data-lang="ko">지금 탐험하기</span>
+        </a>
     </div>
 
     <div class="container">
         <div class="destinations-section">
-            <h2>Popular Destinations</h2>
+            <h2>인기 여행지 | Popular Destinations</h2>
             <div class="destinations-grid">
                 <div class="destination-card">
                     <img src="https://images.unsplash.com/photo-1558005530-a7958896ec60" alt="Bali">
                     <div class="destination-content">
-                        <h3>Bali</h3>
-                        <p>Explore kindergartens, daycares and family communities in paradise.</p>
+                        <h3>발리 | Bali</h3>
+                        <p>천국에서 유치원, 어린이집, 가족 커뮤니티를 탐험하세요.<br>
+                        Explore kindergartens, daycares and family communities in paradise.</p>
                         <div class="destination-stats">
                             <div class="stat">
                                 <i class="fas fa-user-friends"></i>
-                                <span>2.5k Families</span>
+                                <span>2.5천 가족 | 2.5k Families</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-school"></i>
-                                <span>45 Schools</span>
+                                <span>45개 학교 | 45 Schools</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-star"></i>
-                                <span>4.8/5</span>
+                                <span>4.8/5 평점 | 4.8/5 Rating</span>
                             </div>
                         </div>
                     </div>
@@ -851,20 +894,21 @@
                 <div class="destination-card">
                     <img src="https://images.unsplash.com/photo-1538669715315-155098f0fb1d" alt="Seoul">
                     <div class="destination-content">
-                        <h3>Seoul</h3>
-                        <p>Discover expat-friendly educational options and Korean family life tips.</p>
+                        <h3>서울 | Seoul</h3>
+                        <p>발리 현지 가이드가 추천하는 교육 옵션과 한국 가족 생활 팁을 발견하세요.<br>
+                        Discover expat-friendly educational options and Korean family life tips.</p>
                         <div class="destination-stats">
                             <div class="stat">
                                 <i class="fas fa-user-friends"></i>
-                                <span>5k Families</span>
+                                <span>5천 가족 | 5k Families</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-school"></i>
-                                <span>120 Schools</span>
+                                <span>120개 학교 | 120 Schools</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-star"></i>
-                                <span>4.9/5</span>
+                                <span>4.9/5 평점 | 4.9/5 Rating</span>
                             </div>
                         </div>
                     </div>
@@ -872,20 +916,21 @@
                 <div class="destination-card">
                     <img src="https://images.unsplash.com/photo-1598935898639-81586f7d2129" alt="Chiang Mai">
                     <div class="destination-content">
-                        <h3>Chiang Mai</h3>
-                        <p>A haven for nomad families, with nature-based schools and creative hubs.</p>
+                        <h3>치앙마이 | Chiang Mai</h3>
+                        <p>노마드 가족을 위한 자연 기반의 학교와 창의적인 커뮤니티를 발견하세요.<br>
+                        A haven for nomad families, with nature-based schools and creative hubs.</p>
                         <div class="destination-stats">
                             <div class="stat">
                                 <i class="fas fa-user-friends"></i>
-                                <span>1.8k Families</span>
+                                <span>1.8천 가족 | 1.8k Families</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-school"></i>
-                                <span>30 Schools</span>
+                                <span>30개 학교 | 30 Schools</span>
                             </div>
                             <div class="stat">
                                 <i class="fas fa-star"></i>
-                                <span>4.7/5</span>
+                                <span>4.7/5 평점 | 4.7/5 Rating</span>
                             </div>
                         </div>
                     </div>
@@ -894,52 +939,70 @@
         </div>
 
         <div class="filter-section">
-            <h2>Filter by Children Age & Facility Type</h2>
+            <h2>아이 연령 및 시설 유형별 필터 | Filter by Children Age & Facility Type</h2>
             <div class="filter-container">
                 <select class="filter-select">
-                    <option value="">All Ages</option>
-                    <option value="0-2">0-2 years</option>
-                    <option value="3-5">3-5 years</option>
-                    <option value="6-12">6-12 years</option>
-                    <option value="13-18">13-18 years</option>
+                    <option value="">전체 연령 | All Ages</option>
+                    <option value="0-2">0-2세 | 0-2 years</option>
+                    <option value="3-5">3-5세 | 3-5 years</option>
+                    <option value="6-12">6-12세 | 6-12 years</option>
+                    <option value="13-18">13-18세 | 13-18 years</option>
                 </select>
                 <select class="filter-select">
-                    <option value="">All Types</option>
-                    <option value="education">Education</option>
-                    <option value="activities">Activities</option>
-                    <option value="healthcare">Healthcare</option>
-                    <option value="accommodation">Accommodation</option>
+                    <option value="">전체 유형 | All Types</option>
+                    <option value="education">교육 | Education</option>
+                    <option value="activities">활동 | Activities</option>
+                    <option value="healthcare">의료 | Healthcare</option>
+                    <option value="accommodation">숙박 | Accommodation</option>
                 </select>
             </div>
         </div>
 
         <div class="category-buttons">
             <button class="category-btn active" data-category="all">
-                <i class="fas fa-globe"></i> 전체보기
+                <i class="fas fa-globe"></i>
+                <span data-lang="en">All</span>
+                <span data-lang="ko">전체보기</span>
             </button>
             <button class="category-btn" data-category="kids-restaurant">
-                <i class="fas fa-utensils"></i> 키즈식당
+                <i class="fas fa-utensils"></i>
+                <span data-lang="en">Kids Restaurant</span>
+                <span data-lang="ko">키즈식당</span>
             </button>
             <button class="category-btn" data-category="kids-cafe">
-                <i class="fas fa-coffee"></i> 키즈카페
+                <i class="fas fa-coffee"></i>
+                <span data-lang="en">Kids Cafe</span>
+                <span data-lang="ko">키즈카페</span>
             </button>
             <button class="category-btn" data-category="playground">
-                <i class="fas fa-child"></i> 놀이터/공원
+                <i class="fas fa-child"></i>
+                <span data-lang="en">Playground/Park</span>
+                <span data-lang="ko">놀이터/공원</span>
             </button>
             <button class="category-btn" data-category="hospital">
-                <i class="fas fa-hospital"></i> 소아과/병원
+                <i class="fas fa-hospital"></i>
+                <span data-lang="en">Pediatric/Hospital</span>
+                <span data-lang="ko">소아과/병원</span>
             </button>
             <button class="category-btn" data-category="pharmacy">
-                <i class="fas fa-prescription-bottle-medical"></i> 약국
+                <i class="fas fa-prescription-bottle-medical"></i>
+                <span data-lang="en">Pharmacy</span>
+                <span data-lang="ko">약국</span>
             </button>
             <button class="category-btn" data-category="education">
-                <i class="fas fa-school"></i> 교육시설
+                <i class="fas fa-school"></i>
+                <span data-lang="en">Education</span>
+                <span data-lang="ko">교육시설</span>
             </button>
             <button class="category-btn" data-category="accommodation">
-                <i class="fas fa-bed"></i> 키즈호텔
+                <i class="fas fa-bed"></i>
+                <span data-lang="en">Kids Hotel</span>
+                <span data-lang="ko">키즈호텔</span>
             </button>
             <button class="category-btn" data-category="shopping">
-                <i class="fas fa-shopping-cart"></i> 유아용품점
+                <i class="fas fa-shopping-cart"></i>
+                <span data-lang="en">Baby Store</span>
+                <span data-lang="ko">유아용품점</span>
             </button>
         </div>
 
@@ -947,24 +1010,38 @@
         <div id="location-list"></div>
 
         <div class="board-section">
-            <h2 style="text-align: center; margin-bottom: 2rem;">커뮤니티 게시판</h2>
+            <h2 style="text-align: center; margin-bottom: 2rem;">
+                <span data-lang="en">Community Board</span>
+                <span data-lang="ko">커뮤니티 게시판</span>
+            </h2>
             <div class="board-container">
-                <!-- 자유게시판 -->
+                <!-- Free Board -->
                 <div class="board-content">
-                    <h3>자유게시판 <a href="#" class="write-btn">글쓰기</a></h3>
+                    <h3>
+                        <span data-lang="en">Free Board</span>
+                        <span data-lang="ko">자유게시판</span>
+                        <a href="#" class="write-btn">
+                            <span data-lang="en">Write</span>
+                            <span data-lang="ko">글쓰기</span>
+                        </a>
+                    </h3>
                     <div class="search-box">
-                        <input type="text" class="search-input" placeholder="키워드로 검색하기">
+                        <input type="text" class="search-input" placeholder="Search by keyword">
                         <button class="search-btn">
                             <i class="fas fa-search"></i>
-                            검색
+                            <span data-lang="en">Search</span>
+                            <span data-lang="ko">검색</span>
                         </button>
                     </div>
                     <div class="board-list">
                         <div class="board-item">
-                            <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="프로필" class="board-profile">
+                            <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Profile" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">발리 워터밤 후기 공유해요!</span>
-                                <span class="board-meta">김여행러 | 2024.03.15 | 조회 128</span>
+                                <span class="board-title">
+                                    <span data-lang="en">Sharing my Bali Waterbom experience!</span>
+                                    <span data-lang="ko">발리 워터밤 후기 공유해요!</span>
+                                </span>
+                                <span class="board-meta">Kim Traveler | 2024.03.15 | Views 128</span>
                             </div>
                             <div class="board-stats">
                                 <span><i class="fas fa-heart"></i> 24</span>
@@ -974,8 +1051,8 @@
                         <div class="board-item">
                             <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="프로필" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">우붓에서 아이와 함께하는 문화체험 추천</span>
-                                <span class="board-meta">박엄마 | 2024.03.14 | 조회 156</span>
+                                <span class="board-title">우붓에서 아이와 함께하는 문화체험 추천 | Recommended cultural experiences with kids in Ubud</span>
+                                <span class="board-meta">박엄마 | 2024.03.14 | 조회 | Views 156</span>
                             </div>
                             <div class="board-stats">
                                 <span><i class="fas fa-heart"></i> 31</span>
@@ -985,8 +1062,8 @@
                         <div class="board-item">
                             <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="프로필" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">발리 현지 유치원 체험기</span>
-                                <span class="board-meta">이세계 | 2024.03.13 | 조회 203</span>
+                                <span class="board-title">발리 현지 유치원 체험기 | Experience at a local kindergarten in Bali</span>
+                                <span class="board-meta">이세계 | 2024.03.13 | 조회 | Views 203</span>
                             </div>
                             <div class="board-stats">
                                 <span><i class="fas fa-heart"></i> 45</span>
@@ -1003,40 +1080,48 @@
                     </div>
                 </div>
 
-                <!-- 물품 판매/나눔 게시판 -->
+                <!-- Buy/Sell Board -->
                 <div class="board-content">
-                    <h3>물품 판매/나눔 <a href="#" class="write-btn">글쓰기</a></h3>
+                    <h3>
+                        <span data-lang="en">Buy/Sell</span>
+                        <span data-lang="ko">물품 판매/나눔</span>
+                        <a href="#" class="write-btn">
+                            <span data-lang="en">Write</span>
+                            <span data-lang="ko">글쓰기</span>
+                        </a>
+                    </h3>
                     <div class="search-box">
-                        <input type="text" class="search-input" placeholder="물품명, 가격 등으로 검색">
+                        <input type="text" class="search-input" placeholder="Search by item, price">
                         <button class="search-btn">
                             <i class="fas fa-search"></i>
-                            검색
+                            <span data-lang="en">Search</span>
+                            <span data-lang="ko">검색</span>
                         </button>
                     </div>
                     <div class="board-list">
                         <div class="board-item">
                             <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="프로필" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[판매] 유아용 비치텐트 판매합니다</span>
-                                <span class="board-meta">해변러버 | 2024.03.15 | 조회 89</span>
+                                <span class="board-title">[판매 | Sale] 유아용 비치텐트 판매합니다 | Selling baby beach tent</span>
+                                <span class="board-meta">해변러버 | 2024.03.15 | 조회 | Views 89</span>
                             </div>
-                            <div class="board-price">150,000원</div>
+                            <div class="board-price">150,000원 | ₩150,000</div>
                         </div>
                         <div class="board-item">
                             <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="프로필" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[나눔] 유아 수영용품 나눔해요</span>
-                                <span class="board-meta">물놀이맘 | 2024.03.14 | 조회 134</span>
+                                <span class="board-title">[나눔 | Free] 유아 수영용품 나눔해요 | Sharing baby swimming items</span>
+                                <span class="board-meta">물놀이맘 | 2024.03.14 | 조회 | Views 134</span>
                             </div>
-                            <div class="board-price">나눔</div>
+                            <div class="board-price">나눔 | Free</div>
                         </div>
                         <div class="board-item">
                             <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="프로필" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[판매] 아기 캐리어 거의 새것</span>
-                                <span class="board-meta">육아전문 | 2024.03.13 | 조회 167</span>
+                                <span class="board-title">[판매 | Sale] 아기 캐리어 거의 새것 | Baby carrier almost new</span>
+                                <span class="board-meta">육아전문 | 2024.03.13 | 조회 | Views 167</span>
                             </div>
-                            <div class="board-price">80,000원</div>
+                            <div class="board-price">80,000원 | ₩80,000</div>
                         </div>
                     </div>
                     <div class="pagination">
@@ -1048,38 +1133,46 @@
                     </div>
                 </div>
 
-                <!-- 이벤트 게시판 -->
+                <!-- Events Board -->
                 <div class="board-content">
-                    <h3>이벤트 <a href="#" class="write-btn">글쓰기</a></h3>
+                    <h3>
+                        <span data-lang="en">Events</span>
+                        <span data-lang="ko">이벤트</span>
+                        <a href="#" class="write-btn">
+                            <span data-lang="en">Write</span>
+                            <span data-lang="ko">글쓰기</span>
+                        </a>
+                    </h3>
                     <div class="search-box">
-                        <input type="text" class="search-input" placeholder="이벤트명, 장소 등으로 검색">
+                        <input type="text" class="search-input" placeholder="Search by event, location">
                         <button class="search-btn">
                             <i class="fas fa-search"></i>
-                            검색
+                            <span data-lang="en">Search</span>
+                            <span data-lang="ko">검색</span>
                         </button>
                     </div>
                     <div class="board-list">
                         <div class="board-item">
                             <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="프로필" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[진행중] 발리 키즈카페 무료 이용권 이벤트</span>
-                                <span class="board-meta">이벤트킹 | 2024.03.15 | 조회 423</span>
+                                <span class="board-title">[진행중 | Ongoing] 발리 키즈카페 무료 이용권 이벤트 | Bali Kids Cafe Free Pass Event</span>
+                                <span class="board-meta">이벤트킹 | 2024.03.15 | 조회 | Views 423</span>
                             </div>
                             <div class="board-date">~03/31</div>
                         </div>
                         <div class="board-item">
                             <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="프로필" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[모집] 발리 가족사진 무료 촬영 이벤트</span>
-                                <span class="board-meta">포토그래퍼 | 2024.03.14 | 조회 356</span>
+                                <span class="board-title">[모집 | Recruiting] 발리 가족사진 무료 촬영 이벤트 | Free Family Photo Session in Bali</span>
+                                <span class="board-meta">포토그래퍼 | 2024.03.14 | 조회 | Views 356</span>
                             </div>
                             <div class="board-date">~03/25</div>
                         </div>
                         <div class="board-item">
                             <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="프로필" class="board-profile">
                             <div class="board-info">
-                                <span class="board-title">[진행중] 우붓 문화체험 50% 할인</span>
-                                <span class="board-meta">문화나눔 | 2024.03.13 | 조회 289</span>
+                                <span class="board-title">[진행중 | Ongoing] 우붓 문화체험 50% 할인 | Ubud Cultural Experience 50% Off</span>
+                                <span class="board-meta">문화나눔 | 2024.03.13 | 조회 | Views 289</span>
                             </div>
                             <div class="board-date">~03/20</div>
                         </div>
@@ -1096,270 +1189,275 @@
         </div>
 
         <div class="hotplace-section">
-            <h2>인플루언서들이 추천하는 발리 핫플레이스/이벤트 ✨</h2>
+            <h2>
+                <span data-lang="en">Bali Hot Places/Events Recommended by Influencers ✨</span>
+                <span data-lang="ko">인플루언서들이 추천하는 발리 핫플레이스/이벤트 ✨</span>
+            </h2>
             <div class="hotplace-grid">
-                <!-- 우붓 원숭이 숲 -->
+                <!-- Ubud Monkey Forest -->
                 <div class="hotplace-card">
                     <div class="hotplace-image">
-                        <img src="https://images.unsplash.com/photo-1578469550956-0e16b69c6a3d" alt="우붓 원숭이 숲">
+                        <img src="https://images.unsplash.com/photo-1578469550956-0e16b69c6a3d" alt="Ubud Monkey Forest">
                     </div>
                     <div class="hotplace-content">
-                        <h3>우붓 원숭이 숲</h3>
-                        <p>자연과 교감할 수 있는 발리의 대표 명소</p>
+                        <h3>
+                            <span data-lang="en">Ubud Monkey Forest</span>
+                            <span data-lang="ko">우붓 원숭이 숲</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">A signature attraction where you can connect with nature</span>
+                            <span data-lang="ko">자연과 교감할 수 있는 발리의 대표 명소</span>
+                        </p>
                         <div class="hotplace-tags">
-                            <span>#자연</span>
-                            <span>#가족여행</span>
-                            <span>#우붓</span>
+                            <span data-lang="en">#nature</span>
+                            <span data-lang="ko">#자연</span>
+                            <span data-lang="en">#familytrip</span>
+                            <span data-lang="ko">#가족여행</span>
+                            <span data-lang="en">#ubud</span>
+                            <span data-lang="ko">#우붓</span>
                         </div>
                         <div class="influencer-reviews">
-                            <div class="influencer-review" style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
-                                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Sarah Kim" style="width: 40px; height: 40px; border-radius: 50%;">
+                            <div class="influencer-review">
+                                <div class="reviewer-info">
+                                    <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Sarah Kim">
                                     <div>
-                                        <div style="font-weight: 500;">Sarah Kim</div>
-                                        <div style="font-size: 0.8rem; color: #666;">@sarahkim_family</div>
+                                        <div class="reviewer-name">Sarah Kim</div>
+                                        <div class="reviewer-handle">@sarahkim_family</div>
                                     </div>
                                 </div>
-                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"아이들의 자연 학습장으로 최고예요! 원숭이들과 안전하게 교감할 수 있고, 열대우림 속에서 특별한 경험을 할 수 있어요. 꼭 바나나 🍌 챙겨가세요!"</p>
-                            </div>
-                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
-                                    <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Tom Wilson" style="width: 40px; height: 40px; border-radius: 50%;">
-                                    <div>
-                                        <div style="font-weight: 500;">Tom Wilson</div>
-                                        <div style="font-size: 0.8rem; color: #666;">@tomwilson_travels</div>
-                                    </div>
-                                </div>
-                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"아침 일찍 방문하면 더욱 활동적인 원숭이들을 만날 수 있어요. 아이들이 자연 속에서 동물들과 교감하며 배우는 최고의 장소입니다! 🐒"</p>
-                            </div>
-                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
-                                    <img src="https://randomuser.me/api/portraits/women/62.jpg" alt="Maya Chen" style="width: 40px; height: 40px; border-radius: 50%;">
-                                    <div>
-                                        <div style="font-weight: 500;">Maya Chen</div>
-                                        <div style="font-size: 0.8rem; color: #666;">@mayaexplores</div>
-                                    </div>
-                                </div>
-                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"숲 속 산책로가 잘 정비되어 있어 유모차도 이용 가능해요. 가이드와 함께하면 더 안전하고 재미있는 체험이 가능합니다. 🌿"</p>
+                                <p>
+                                    <span data-lang="en">"Perfect natural learning environment for kids! Safe interaction with monkeys and unique rainforest experience. Don't forget to bring bananas! 🍌"</span>
+                                    <span data-lang="ko">"아이들의 자연 학습장으로 최고예요! 원숭이들과 안전하게 교감할 수 있고, 열대우림 속에서 특별한 경험을 할 수 있어요. 꼭 바나나 🍌 챙겨가세요!"</span>
+                                </p>
                             </div>
                         </div>
-                        <a href="#" class="detail-button">자세히 보기</a>
+                        <a href="#" class="detail-button">
+                            <span data-lang="en">View Details</span>
+                            <span data-lang="ko">자세히 보기</span>
+                        </a>
                     </div>
                 </div>
 
-                <!-- 누사두아 해변 -->
+                <!-- Nusa Dua Beach -->
                 <div class="hotplace-card">
                     <div class="hotplace-image">
-                        <img src="https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8" alt="누사두아 해변">
+                        <img src="https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8" alt="Nusa Dua Beach">
                     </div>
                     <div class="hotplace-content">
-                        <h3>누사두아 해변</h3>
-                        <p>가족과 함께 즐기기 좋은 아름다운 해변</p>
+                        <h3>
+                            <span data-lang="en">Nusa Dua Beach</span>
+                            <span data-lang="ko">누사두아 해변</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">Beautiful beach perfect for family activities</span>
+                            <span data-lang="ko">가족과 함께 즐기기 좋은 아름다운 해변</span>
+                        </p>
                         <div class="hotplace-tags">
-                            <span>#해변</span>
-                            <span>#가족여행</span>
-                            <span>#누사두아</span>
+                            <span data-lang="en">#beach</span>
+                            <span data-lang="ko">#해변</span>
+                            <span data-lang="en">#familytrip</span>
+                            <span data-lang="ko">#가족여행</span>
+                            <span data-lang="en">#nusadua</span>
+                            <span data-lang="ko">#누사두아</span>
                         </div>
-                        <div class="influencer-reviews">
-                            <div class="influencer-review" style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
-                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David Park" style="width: 40px; height: 40px; border-radius: 50%;">
-                                    <div>
-                                        <div style="font-weight: 500;">David Park</div>
-                                        <div style="font-size: 0.8rem; color: #666;">@davidinbali</div>
-                                    </div>
-                                </div>
-                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"발리에서 가장 안전한 해변 중 하나에요. 파도가 잔잔해서 아이들 물놀이하기 좋고, 선베드와 파라솔이 잘 갖춰져 있어요. 일몰 시간대에 방문하면 환상적인 뷰를 볼 수 있답니다! 🌅"</p>
-                            </div>
-                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
-                                    <img src="https://randomuser.me/api/portraits/women/75.jpg" alt="Lisa Johnson" style="width: 40px; height: 40px; border-radius: 50%;">
-                                    <div>
-                                        <div style="font-weight: 500;">Lisa Johnson</div>
-                                        <div style="font-size: 0.8rem; color: #666;">@lisa_beachlife</div>
-                                    </div>
-                                </div>
-                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"해변 주변에 키즈 프로그램을 운영하는 비치클럽이 있어요. 아이들이 수영도 배우고 모래성도 만들며 즐거운 시간을 보낼 수 있습니다! 🏖️"</p>
-                            </div>
-                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
-                                    <img src="https://randomuser.me/api/portraits/men/92.jpg" alt="Alex Brown" style="width: 40px; height: 40px; border-radius: 50%;">
-                                    <div>
-                                        <div style="font-weight: 500;">Alex Brown</div>
-                                        <div style="font-size: 0.8rem; color: #666;">@alexbrown_bali</div>
-                                    </div>
-                                </div>
-                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"주변에 가족 친화적인 레스토랑이 많아서 편리해요. 특히 아침에 방문하면 한적하게 즐길 수 있답니다. 선크림은 필수! ⛱️"</p>
-                            </div>
-                        </div>
-                        <a href="#" class="detail-button">자세히 보기</a>
+                        <a href="#" class="detail-button">
+                            <span data-lang="en">View Details</span>
+                            <span data-lang="ko">자세히 보기</span>
+                        </a>
                     </div>
                 </div>
 
-                <!-- 와루구 레스토랑 -->
+                <!-- Warung Restaurant -->
                 <div class="hotplace-card">
                     <div class="hotplace-image">
-                        <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7" alt="와루구 레스토랑">
+                        <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7" alt="Warung Restaurant">
                     </div>
                     <div class="hotplace-content">
-                        <h3>와루구 레스토랑</h3>
-                        <p>지역 음식을 맛볼 수 있는 인기 맛집</p>
+                        <h3>
+                            <span data-lang="en">Warung Restaurant</span>
+                            <span data-lang="ko">와루구 레스토랑</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">Popular restaurant featuring local cuisine</span>
+                            <span data-lang="ko">지역 음식을 맛볼 수 있는 인기 맛집</span>
+                        </p>
                         <div class="hotplace-tags">
-                            <span>#맛집</span>
-                            <span>#로컬푸드</span>
-                            <span>#가족식당</span>
+                            <span data-lang="en">#restaurant</span>
+                            <span data-lang="ko">#맛집</span>
+                            <span data-lang="en">#localfood</span>
+                            <span data-lang="ko">#로컬푸드</span>
+                            <span data-lang="en">#familydining</span>
+                            <span data-lang="ko">#가족식당</span>
                         </div>
-                        <div class="influencer-reviews">
-                            <div class="influencer-review" style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
-                                    <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Emma Lee" style="width: 40px; height: 40px; border-radius: 50%;">
-                                    <div>
-                                        <div style="font-weight: 500;">Emma Lee</div>
-                                        <div style="font-size: 0.8rem; color: #666;">@emma_kidsbali</div>
-                                    </div>
-                                </div>
-                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"아이들도 먹기 좋은 마일드한 발리 음식이 준비되어 있어요. 키즈메뉴도 있고, 청결도도 최고! 특히 나시고랭은 꼭 드셔보세요 🍚 매주 일요일 저녁에는 전통 공연도 볼 수 있답니다."</p>
-                            </div>
-                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 0.5rem;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
-                                    <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Ryan Kim" style="width: 40px; height: 40px; border-radius: 50%;">
-                                    <div>
-                                        <div style="font-weight: 500;">Ryan Kim</div>
-                                        <div style="font-size: 0.8rem; color: #666;">@ryan_foodie</div>
-                                    </div>
-                                </div>
-                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"키즈존이 따로 마련되어 있어서 아이들이 식사하면서 놀 수 있어요. 유기농 재료를 사용하는 것도 큰 장점! 🥗"</p>
-                            </div>
-                            <div class="influencer-review" style="margin-top: 0.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
-                                    <img src="https://randomuser.me/api/portraits/women/89.jpg" alt="Sophie Wang" style="width: 40px; height: 40px; border-radius: 50%;">
-                                    <div>
-                                        <div style="font-weight: 500;">Sophie Wang</div>
-                                        <div style="font-size: 0.8rem; color: #666;">@sophieeats</div>
-                                    </div>
-                                </div>
-                                <p style="font-size: 0.9rem; color: #444; margin: 0;">"영어/한국어 메뉴판이 있어서 주문이 편해요. 스태프들도 아이들에게 친절하고, 알러지 있는 아이들을 위한 특별 메뉴도 준비되어 있답니다! 👨‍👩‍👧‍👦"</p>
-                            </div>
-                        </div>
-                        <a href="#" class="detail-button">자세히 보기</a>
+                        <a href="#" class="detail-button">
+                            <span data-lang="en">View Details</span>
+                            <span data-lang="ko">자세히 보기</span>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 퍼니폭스 추천 광고 섹션 -->
+        <!-- Funnyfox Recommended Section -->
         <div class="hotplace-section" style="background-color: #FFF5F0; margin: 4rem 0;">
-            <h2 style="color: #FF6B35;">퍼니폭스가 추천합니다 <span style="font-size: 0.8em; color: #666;">(광고)</span></h2>
+            <h2 style="color: #FF6B35;">
+                <span data-lang="en">Recommended by Funnyfox <span style="font-size: 0.8em; color: #666;">(AD)</span></span>
+                <span data-lang="ko">퍼니폭스가 추천합니다 <span style="font-size: 0.8em; color: #666;">(광고)</span></span>
+            </h2>
             <div class="hotplace-grid">
-                <!-- 키즈메디 병원 -->
+                <!-- Kids Medical Center -->
                 <div class="hotplace-card">
                     <div class="hotplace-image">
-                        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d" alt="키즈메디 병원">
+                        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d" alt="Kids Medical Center">
                     </div>
                     <div class="hotplace-content">
-                        <h3>키즈메디 병원</h3>
-                        <p>한국인 소아과 전문의 상주, 24시간 응급진료</p>
+                        <h3>
+                            <span data-lang="en">Kids Medical Center</span>
+                            <span data-lang="ko">키즈메디 병원</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">Korean pediatrician on staff, 24/7 emergency care</span>
+                            <span data-lang="ko">한국인 소아과 전문의 상주, 24시간 응급진료</span>
+                        </p>
                         <div class="hotplace-tags">
-                            <span>#한국의료진</span>
-                            <span>#영어가능</span>
-                            <span>#소아과전문</span>
+                            <span data-lang="en">#KoreanMedical</span>
+                            <span data-lang="ko">#한국의료진</span>
+                            <span data-lang="en">#EnglishAvailable</span>
+                            <span data-lang="ko">#영어가능</span>
+                            <span data-lang="en">#Pediatric</span>
+                            <span data-lang="ko">#소아과전문</span>
                         </div>
-                        <div style="margin: 10px 0; font-size: 0.9em; color: #666;">
-                            <i class="fas fa-map-marker-alt"></i> 누사두아 메인로드 123
-                            <br>
-                            <i class="fas fa-phone"></i> +62-123-4567
-                        </div>
-                        <a href="#" class="detail-button">예약하기</a>
+                        <a href="#" class="detail-button">
+                            <span data-lang="en">Book Appointment</span>
+                            <span data-lang="ko">예약하기</span>
+                        </a>
                     </div>
                 </div>
 
-                <!-- 리틀포레스트 키즈카페 -->
+                <!-- Little Forest Kids Cafe -->
                 <div class="hotplace-card">
                     <div class="hotplace-image">
-                        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9" alt="리틀포레스트 키즈카페 - 실내 놀이터">
+                        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9" alt="Little Forest Kids Cafe">
                     </div>
                     <div class="hotplace-content">
-                        <h3>리틀포레스트 키즈카페</h3>
-                        <p>친환경 놀이시설과 한국식 간식이 있는 프리미엄 키즈카페</p>
+                        <h3>
+                            <span data-lang="en">Little Forest Kids Cafe</span>
+                            <span data-lang="ko">리틀포레스트 키즈카페</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">Premium kids cafe with eco-friendly facilities and Korean snacks</span>
+                            <span data-lang="ko">친환경 놀이시설과 한국식 간식이 있는 프리미엄 키즈카페</span>
+                        </p>
                         <div class="hotplace-tags">
-                            <span>#친환경시설</span>
-                            <span>#한국간식</span>
-                            <span>#영유아전용</span>
+                            <span data-lang="en">#EcoFriendly</span>
+                            <span data-lang="ko">#친환경시설</span>
+                            <span data-lang="en">#KoreanSnacks</span>
+                            <span data-lang="ko">#한국간식</span>
                         </div>
-                        <div style="margin: 10px 0; font-size: 0.9em; color: #666;">
-                            <i class="fas fa-map-marker-alt"></i> 꾸따 중심가 456
-                            <br>
-                            <i class="fas fa-clock"></i> 10:00 - 20:00
-                        </div>
-                        <a href="#" class="detail-button">할인쿠폰 받기</a>
+                        <a href="#" class="detail-button">
+                            <span data-lang="en">Get Discount Coupon</span>
+                            <span data-lang="ko">할인쿠폰 받기</span>
+                        </a>
                     </div>
                 </div>
 
-                <!-- 해피키즈 마트 -->
+                <!-- Happy Kids Mart -->
                 <div class="hotplace-card">
                     <div class="hotplace-image">
-                        <img src="https://images.unsplash.com/photo-1601600576337-c1d8a0d1373c" alt="해피키즈 마트">
+                        <img src="https://images.unsplash.com/photo-1601600576337-c1d8a0d1373c" alt="Happy Kids Mart">
                     </div>
                     <div class="hotplace-content">
-                        <h3>해피키즈 마트</h3>
-                        <p>한국 유아용품과 간식을 한곳에서, 긴급 배송 가능</p>
+                        <h3>
+                            <span data-lang="en">Happy Kids Mart</span>
+                            <span data-lang="ko">해피키즈 마트</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">Korean baby products and snacks, urgent delivery available</span>
+                            <span data-lang="ko">한국 유아용품과 간식을 한곳에서, 긴급 배송 가능</span>
+                        </p>
                         <div class="hotplace-tags">
-                            <span>#한국제품</span>
-                            <span>#당일배송</span>
-                            <span>#유아용품</span>
+                            <span data-lang="en">#KoreanProducts</span>
+                            <span data-lang="ko">#한국제품</span>
+                            <span data-lang="en">#SameDay</span>
+                            <span data-lang="ko">#당일배송</span>
                         </div>
-                        <div style="margin: 10px 0; font-size: 0.9em; color: #666;">
-                            <i class="fas fa-map-marker-alt"></i> 스미냑 거리 789
-                            <br>
-                            <i class="fas fa-truck"></i> 2시간 이내 배송
-                        </div>
-                        <a href="#" class="detail-button">온라인 주문</a>
+                        <a href="#" class="detail-button">
+                            <span data-lang="en">Shop Online</span>
+                            <span data-lang="ko">온라인 주문</span>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="community-section">
-            <h2>Funnyfox 파트너 인플루언서 & 후원사</h2>
+            <h2>
+                <span data-lang="en">Funnyfox Partner Influencers & Sponsors</span>
+                <span data-lang="ko">Funnyfox 파트너 인플루언서 & 후원사</span>
+            </h2>
             <div class="community-grid">
                 <div class="influencer-section">
                     <div class="influencer-card">
                         <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Sarah Kim" class="influencer-photo">
                         <div class="influencer-info">
                             <h3 class="influencer-name">Sarah Kim</h3>
-                            <p class="influencer-title">가족 여행 전문 유튜버 | 구독자 50만+</p>
+                            <p class="influencer-title">
+                                <span data-lang="en">Family Travel YouTuber | 500K+ Subscribers</span>
+                                <span data-lang="ko">가족 여행 전문 유튜버 | 구독자 50만+</span>
+                            </p>
                             <div class="influencer-stats">
                                 <span><i class="fab fa-youtube"></i> @sarahkim_family</span>
                                 <span><i class="fab fa-instagram"></i> 82k followers</span>
                             </div>
                         </div>
-                        <a href="#" class="social-link">채널 방문 <i class="fas fa-external-link-alt"></i></a>
+                        <a href="#" class="social-link">
+                            <span data-lang="en">Visit Channel</span>
+                            <span data-lang="ko">채널 방문</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
                     </div>
 
                     <div class="influencer-card">
                         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="David Park" class="influencer-photo">
                         <div class="influencer-info">
                             <h3 class="influencer-name">David Park</h3>
-                            <p class="influencer-title">발리 현지 가이드 | 교육 컨설턴트</p>
+                            <p class="influencer-title">
+                                <span data-lang="en">Bali Local Guide | Education Consultant</span>
+                                <span data-lang="ko">발리 현지 가이드 | 교육 컨설턴트</span>
+                            </p>
                             <div class="influencer-stats">
                                 <span><i class="fab fa-instagram"></i> @davidinbali</span>
-                                <span><i class="fas fa-users"></i> 120+ 가족 투어</span>
+                                <span><i class="fas fa-users"></i>
+                                    <span data-lang="en">120+ Family Tours</span>
+                                    <span data-lang="ko">120+ 가족 투어</span>
+                                </span>
                             </div>
                         </div>
-                        <a href="#" class="social-link">프로필 보기 <i class="fas fa-external-link-alt"></i></a>
+                        <a href="#" class="social-link">
+                            <span data-lang="en">View Profile</span>
+                            <span data-lang="ko">프로필 보기</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
                     </div>
 
                     <div class="influencer-card">
                         <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Emma Lee" class="influencer-photo">
                         <div class="influencer-info">
                             <h3 class="influencer-name">Emma Lee</h3>
-                            <p class="influencer-title">키즈 액티비티 전문가 | 발리 거주 5년</p>
+                            <p class="influencer-title">
+                                <span data-lang="en">Kids Activity Expert | 5 Years in Bali</span>
+                                <span data-lang="ko">키즈 액티비티 전문가 | 발리 거주 5년</span>
+                            </p>
                             <div class="influencer-stats">
                                 <span><i class="fab fa-instagram"></i> @emma_kidsbali</span>
-                                <span><i class="fas fa-star"></i> 4.9/5 평점</span>
+                                <span><i class="fas fa-star"></i> 4.9/5 Rating</span>
                             </div>
                         </div>
-                        <a href="#" class="social-link">프로그램 보기 <i class="fas fa-external-link-alt"></i></a>
+                        <a href="#" class="social-link">
+                            <span data-lang="en">View Programs</span>
+                            <span data-lang="ko">프로그램 보기</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -1369,7 +1467,10 @@
                         <img src="https://logo.clearbit.com/garuda-indonesia.com" alt="Garuda Indonesia" class="sponsor-logo">
                         <div class="sponsor-info">
                             <h4 class="sponsor-name">Garuda Indonesia</h4>
-                            <p class="sponsor-description">가족 여행객 특별 할인 제공</p>
+                            <p class="sponsor-description">
+                                <span data-lang="en">Special discounts for family travelers</span>
+                                <span data-lang="ko">가족 여행객 특별 할인 제공</span>
+                            </p>
                         </div>
                     </div>
 
@@ -1377,7 +1478,10 @@
                         <img src="https://logo.clearbit.com/ritzcarlton.com" alt="The Ritz-Carlton Bali" class="sponsor-logo">
                         <div class="sponsor-info">
                             <h4 class="sponsor-name">The Ritz-Carlton Bali</h4>
-                            <p class="sponsor-description">키즈 프로그램 파트너십</p>
+                            <p class="sponsor-description">
+                                <span data-lang="en">Kids program partnership</span>
+                                <span data-lang="ko">키즈 프로그램 파트너십</span>
+                            </p>
                         </div>
                     </div>
 
@@ -1385,7 +1489,10 @@
                         <img src="https://logo.clearbit.com/klook.com" alt="Klook" class="sponsor-logo">
                         <div class="sponsor-info">
                             <h4 class="sponsor-name">Klook</h4>
-                            <p class="sponsor-description">가족 액티비티 독점 할인</p>
+                            <p class="sponsor-description">
+                                <span data-lang="en">Exclusive discounts on family activities</span>
+                                <span data-lang="ko">가족 액티비티 독점 할인</span>
+                            </p>
                         </div>
                     </div>
 
@@ -1393,7 +1500,10 @@
                         <img src="https://logo.clearbit.com/airasia.com" alt="AirAsia" class="sponsor-logo">
                         <div class="sponsor-info">
                             <h4 class="sponsor-name">AirAsia</h4>
-                            <p class="sponsor-description">특별 가족석 제공</p>
+                            <p class="sponsor-description">
+                                <span data-lang="en">Special family seating options</span>
+                                <span data-lang="ko">특별 가족석 제공</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1407,6 +1517,36 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script>
+        // Add this at the beginning of your script section
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            const newLang = currentLang === 'en' ? 'ko' : 'en';
+            document.documentElement.lang = newLang;
+            
+            // Hide current language elements
+            document.querySelectorAll(`[data-lang="${currentLang}"]`).forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show new language elements
+            document.querySelectorAll(`[data-lang="${newLang}"]`).forEach(el => {
+                el.style.display = 'inline';
+            });
+            
+            currentLang = newLang;
+        }
+
+        // Initialize language display
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('[data-lang="ko"]').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('[data-lang="en"]').forEach(el => {
+                el.style.display = 'inline';
+            });
+        });
+
         // Firebase 설정
         const firebaseConfig = {
             apiKey: "AIzaSyDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -1657,10 +1797,15 @@
         <div class="container">
             <h3 style="font-size: 1.5rem; color: #FF6B35; margin-bottom: 0.5rem;">FunnyFolks EDU</h3>
             <p style="color: #666; margin-bottom: 0.5rem;">
-                Email: contact@funnyfolks.io | Instagram: @funnyfolks.global
+                <span data-lang="en">Email: contact@funnyfolks.io</span>
+                <span data-lang="ko">이메일: contact@funnyfolks.io</span>
+                <br>
+                <span data-lang="en">Instagram: @funnyfolks.global</span>
+                <span data-lang="ko">인스타그램: @funnyfolks.global</span>
             </p>
             <p style="color: #999; font-size: 0.9rem;">
-                © 2025 FunnyFolks. All rights reserved.
+                <span data-lang="en">© 2025 FunnyFolks. All rights reserved.</span>
+                <span data-lang="ko">© 2025 FunnyFolks. 모든 권리 보유.</span>
             </p>
         </div>
     </footer>
